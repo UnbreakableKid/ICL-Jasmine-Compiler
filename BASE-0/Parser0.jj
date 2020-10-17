@@ -11,8 +11,9 @@ public class Parser {
 
     while (true) {
         try {
-        exp = parser.Start();
-        System.out.println( exp.eval() );
+            Environment e = new Environment();
+            exp = parser.Start(e);
+            System.out.println(exp.eval(e));
         } catch (Exception e) {
           System.out.println ("Syntax Error!");
           parser.ReInit(System.in);
@@ -33,6 +34,12 @@ SKIP :
 
 TOKEN :
 {
+  <Def : "def">
+  |
+  < In: "in" >
+  |
+  < End: "end" >
+  |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
   |
   < Num: (["0"-"9"]) + >
@@ -50,10 +57,17 @@ TOKEN :
   < RPAR : ")" >
   |
   < EL: "\n" >
+  |
+  < EQ: "=" >
+
 }
 
-ASTNode Start():
-{ ASTNode t; }
+ASTNode Start(Environment e):
+{ ASTNode t;
+
+ e.beginScope();
+
+}
 {
    t = Exp() <EL>
    { return t; }
@@ -65,17 +79,19 @@ ASTNode Exp() :
 {
      t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
                  { if (op.kind == PLUS) 
-                         t1 = new ASTPlus(t1,t2);
+                        t1 = new ASTPlus(t1,t2);
                    else
-                       t1 = new ASTMinus(t1,t2);
+                        t1 = new ASTMinus(t1,t2);
                  } 
-               ) *
+               )*
      { return t1; } 
 }
 
 ASTNode Term() :
-{Token op;
-  ASTNode t1, t2;}
+{
+ Token op;
+ ASTNode t1, t2;
+}
 {
      t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Term() 
  		 {
@@ -91,40 +107,36 @@ ASTNode Term() :
 
 ASTNode Fact() :{
     Token n, m;
-    ASTNode t;
+    ASTNode t, t1, t2;
   }
     {
+
         (
+
+
+
         <MINUS> n=<Num> {
                 int z = Integer.parseInt(n.image);
                 t = new ASTNum(-z);
 
         }
+
         | n=<Num> {
             t = new ASTNum(Integer.parseInt(n.image));
+        }
+        | n=<Id> {
+
+          t = new ASTId(n.image);
+        }
+
+        |
+
+         <Def> (n = <Id> <EQ> t1 = Exp())+ <In> t2 = Exp() <End> {
+
+          t = new ASTDef(n.image, t1, t2);
         }
 
         | <LPAR> t=Exp() <RPAR> )
         { return t; }
+
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
