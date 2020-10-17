@@ -112,25 +112,31 @@ ASTNode Fact() :{
     {
 
         (
+
+
+
         <MINUS> n=<Num> {
                 int z = Integer.parseInt(n.image);
                 t = new ASTNum(-z);
 
         }
-        
+
         | n=<Num> {
             t = new ASTNum(Integer.parseInt(n.image));
         }
         | n=<Id> {
 
-          t = new ASTId(n.image, e);
+          t = new ASTId(n.image);
         }
 
-        | <Def> (t = <Id> <EQ> t1 = Exp())+ <In> t2 = Exp() <End> {
+        |
 
-          t = new ASTDef(t, t1, t2, e);
+         <Def> (n = <Id> <EQ> t1 = Exp())+ <In> t2 = Exp() <End> {
+
+          t = new ASTDef(n.image, t1, t2);
         }
 
         | <LPAR> t=Exp() <RPAR> )
         { return t; }
+
     }

@@ -25,6 +25,13 @@ public class Environment {
     }
 
     public int find(String id) {
+        for (int i = env.size()-1; i > 0 ; i--) {
+
+            if (env.get(i).get(id) != null){
+                return env.get(i).get(id);
+            }
+        }
         return env.get(env.size()-1).get(id);
+
     }
 }
