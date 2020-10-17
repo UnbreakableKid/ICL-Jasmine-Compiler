@@ -9,9 +9,9 @@ public class Parser implements ParserConstants {
     ASTNode exp;
 
     while (true) {
-        try {
-        exp = parser.Start();
-        System.out.println( exp.eval() );
+        try { Environment e = new Environment();
+        exp = parser.Start(e);
+        System.out.println( exp.eval(e) );
         } catch (Exception e) {
           System.out.println ("Syntax Error!");
           parser.ReInit(System.in);
@@ -19,7 +19,9 @@ public class Parser implements ParserConstants {
     }
   }
 
-  static final public ASTNode Start() throws ParseException {ASTNode t;
+  static final public ASTNode Start(Environment e) throws ParseException {ASTNode t;
+
+ e.beginScope();
     t = Exp();
     jj_consume_token(EL);
 {if ("" != null) return t;}
@@ -101,7 +103,8 @@ if (op.kind == TIMES)
 }
 
   static final public ASTNode Fact() throws ParseException {Token n, m;
-    ASTNode t;
+    ASTNode t, t2;
+    Environment e;
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case MINUS:{
       jj_consume_token(MINUS);
@@ -113,6 +116,10 @@ int z = Integer.parseInt(n.image);
     case Num:{
       n = jj_consume_token(Num);
 t = new ASTNum(Integer.parseInt(n.image));
+      break;
+      }
+    case Id:{
+      n = jj_consume_token(Id);
       break;
       }
     case LPAR:{
@@ -146,7 +153,7 @@ t = new ASTNum(Integer.parseInt(n.image));
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0xc0,0xc0,0x300,0x300,0x4a0,};
+	   jj_la1_0 = new int[] {0x600,0x600,0x1800,0x1800,0x2580,};
 	}
 
   /** Constructor with InputStream. */
@@ -292,7 +299,7 @@ t = new ASTNum(Integer.parseInt(n.image));
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[13];
+	 boolean[] la1tokens = new boolean[17];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -306,7 +313,7 @@ t = new ASTNum(Integer.parseInt(n.image));
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 13; i++) {
+	 for (int i = 0; i < 17; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
