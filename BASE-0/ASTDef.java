@@ -3,8 +3,19 @@ class ASTDef implements ASTNode {
     ASTNode init;
     ASTNode body;
 
+    public ASTDef(String i, ASTNode l, ASTNode r) {
+        id = i;
+        init = l;
+        body = r;
+    } 
+
     public int eval(Environment e) {
 
-    return 0;
+        int v = init.eval(e);
+        e.beginScope();
+        e.assoc(id, v);
+        int val = body.eval(e);
+        e.endScope();
+        return val;
     }
 }
