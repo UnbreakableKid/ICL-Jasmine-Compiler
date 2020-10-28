@@ -77,7 +77,7 @@ ASTNode Exp() :
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term() 
+     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term()
                  { if (op.kind == PLUS) 
                         t1 = new ASTPlus(t1,t2);
                    else
@@ -93,7 +93,7 @@ ASTNode Term() :
  ASTNode t1, t2;
 }
 {
-     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Term() 
+     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Term()
  		 {
               if (op.kind == TIMES)
                   t1 = new ASTMul(t1,t2);
@@ -112,8 +112,6 @@ ASTNode Fact() :{
     {
 
         (
-
-
 
         <MINUS> n=<Num> {
                 int z = Integer.parseInt(n.image);
@@ -135,6 +133,7 @@ ASTNode Fact() :{
 
           t = new ASTDef(n.image, t1, t2);
         }
+
         | <LPAR> t=Exp() <RPAR> )
         { return t; }
 
