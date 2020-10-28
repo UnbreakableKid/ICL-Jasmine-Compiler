@@ -9,12 +9,19 @@ public class Parser implements ParserConstants {
     ASTNode exp;
     CodeBlock codeBlock = new CodeBlock();
 
+
+
     while (true) {
-        try {
+          try {
             Environment e = new Environment();
             exp = parser.Start(e);
-            exp.compile(codeBlock);
-            System.out.println(codeBlock.code.toString());
+            if ((args.length > 0) && (args[0].compareTo("-c")) == 0) {
+              exp.compile(codeBlock);
+              System.out.println(codeBlock.code.toString());
+              codeBlock.code.clear();
+            } else {
+              System.out.println(exp.eval(e));
+            }
         } catch (Exception e) {
           System.out.println ("Syntax Error!");
           parser.ReInit(System.in);
