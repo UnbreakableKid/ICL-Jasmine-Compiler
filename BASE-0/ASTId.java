@@ -10,5 +10,11 @@ public class ASTId implements ASTNode {
 
         return e.find(id);
     }
+
+    @Override
+    public void compile(CodeBlock c) {
+        // TODO Auto-generated method stub
+
+    }
 }
 

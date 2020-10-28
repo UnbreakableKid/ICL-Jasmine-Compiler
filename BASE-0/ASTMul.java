@@ -11,6 +11,13 @@ public class ASTMul implements ASTNode {
     public int eval(Environment e) {
         int v1 = lhs.eval(e);
         int v2 = rhs.eval(e);
-        return v1 * v2;    }
-}
+        return v1 * v2;
+    }
 
+    @Override
+    public void compile(CodeBlock c) {
+        lhs.compile(c);
+        rhs.compile(c);
+        c.emit("imul");
+    }
+}

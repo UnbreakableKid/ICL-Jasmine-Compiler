@@ -7,14 +7,12 @@ public class Parser implements ParserConstants {
   public static void main(String args[]) {
     Parser parser = new Parser(System.in);
     ASTNode exp;
-    CodeBlock codeBlock = new CodeBlock();
 
     while (true) {
         try {
             Environment e = new Environment();
             exp = parser.Start(e);
-            exp.compile(codeBlock);
-            System.out.println(codeBlock.code.toString());
+            System.out.println(exp.eval(e));
         } catch (Exception e) {
           System.out.println ("Syntax Error!");
           parser.ReInit(System.in);

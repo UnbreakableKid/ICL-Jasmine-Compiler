@@ -8,12 +8,14 @@ public class Parser {
   public static void main(String args[]) {
     Parser parser = new Parser(System.in);
     ASTNode exp;
+    CodeBlock codeBlock = new CodeBlock();
 
     while (true) {
         try {
             Environment e = new Environment();
             exp = parser.Start(e);
-            System.out.println(exp.eval(e));
+            exp.compile(codeBlock);
+            System.out.println(codeBlock.code.toString());
         } catch (Exception e) {
           System.out.println ("Syntax Error!");
           parser.ReInit(System.in);
@@ -93,14 +95,16 @@ ASTNode Term() :
  ASTNode t1, t2;
 }
 {
-     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Term()
+     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Fact()
  		 {
               if (op.kind == TIMES)
                   t1 = new ASTMul(t1,t2);
               else
                   t1 = new ASTDiv(t1,t2);
          }
-		)?
+		)*
+
+    
      { return t1; } 
 }
 

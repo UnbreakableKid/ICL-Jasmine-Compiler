@@ -7,7 +7,7 @@ class ASTDef implements ASTNode {
         id = i;
         init = l;
         body = r;
-    } 
+    }
 
     public int eval(Environment e) {
 
@@ -17,5 +17,11 @@ class ASTDef implements ASTNode {
         int val = body.eval(e);
         e.endScope();
         return val;
+    }
+
+    @Override
+    public void compile(CodeBlock c) {
+        // TODO Auto-generated method stub
+
     }
 }

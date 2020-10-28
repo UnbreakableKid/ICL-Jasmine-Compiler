@@ -10,5 +10,10 @@ public class ASTNum implements ASTNode {
     public int eval(Environment e) {
         return val;
     }
-}
 
+    @Override
+    public void compile(CodeBlock c) {
+        c.emit("sipush " + val);
+
+    }
+}
