@@ -8,13 +8,13 @@ public class ASTId implements ASTNode {
 
     public int eval(Environment e) {
 
-        return e.find(id);
+        // return e.find(id);
+        return 1;
     }
 
     @Override
-    public void compile(CodeBlock c) {
+    public void compile(CodeBlock c, Environment e) {
         // TODO Auto-generated method stub
 
     }
 }
-

@@ -12,7 +12,7 @@ public class ASTNum implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock c) {
+    public void compile(CodeBlock c, Environment e) {
         c.emit("sipush " + val);
 
     }

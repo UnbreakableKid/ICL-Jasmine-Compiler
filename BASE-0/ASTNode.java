@@ -2,7 +2,6 @@ public interface ASTNode {
 
     int eval(Environment e);
 
-    void compile (CodeBlock c);
-	
-}
+    void compile(CodeBlock c, Environment e);
 
+}

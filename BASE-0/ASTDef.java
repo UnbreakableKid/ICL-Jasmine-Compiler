@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 class ASTDef implements ASTNode {
     String id;
     ASTNode init;
@@ -20,8 +22,12 @@ class ASTDef implements ASTNode {
     }
 
     @Override
-    public void compile(CodeBlock c) {
-        // TODO Auto-generated method stub
+    public void compile(CodeBlock c, Environment e) {
+
+        
+        init.compile(c, e);
+        e.beginScope();
+        e.assoc(id);
 
     }
 }

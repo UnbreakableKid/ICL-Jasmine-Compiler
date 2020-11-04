@@ -13,13 +13,16 @@ public class Parser implements ParserConstants {
 
     while (true) {
           try {
-            Environment e = new Environment();
-            exp = parser.Start(e);
             if ((args.length > 0) && (args[0].compareTo("-c")) == 0) {
-              exp.compile(codeBlock);
+            Environment<Integer> e = new Environment();
+            exp = parser.Start(e);
+              exp.compile(codeBlock, e);
               System.out.println(codeBlock.code.toString());
               codeBlock.code.clear();
             } else {
+                          Environment<Integer> e = new Environment();
+            exp = parser.Start(e);
+
               System.out.println(exp.eval(e));
             }
         } catch (Exception e) {
