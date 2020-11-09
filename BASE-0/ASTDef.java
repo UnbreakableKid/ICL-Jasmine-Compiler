@@ -24,10 +24,7 @@ class ASTDef implements ASTNode {
     @Override
     public void compile(CodeBlock c, Environment e) {
 
-        
-        init.compile(c, e);
-        e.beginScope();
-        e.assoc(id);
+       
 
     }
 }

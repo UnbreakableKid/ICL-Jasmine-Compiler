@@ -2,10 +2,11 @@ import java.util.ArrayList;
 
 public class CodeBlock {
     ArrayList<String> code;
-    // int pos;
+    int pos;
 
     public CodeBlock() {
         code = new ArrayList<>();
+        pos = 0;
     }
 
     /**
@@ -23,7 +24,9 @@ public class CodeBlock {
      * @return labels for the thingies
      */
     String genSymbol() {
-        return ("label " + (code.size() - 1));
+        String result = ("new frame_" + pos);
+        pos++;
+        return result;
     }
 
 }

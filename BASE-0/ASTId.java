@@ -8,8 +8,7 @@ public class ASTId implements ASTNode {
 
     public int eval(Environment e) {
 
-        // return e.find(id);
-        return 1;
+        return (int) e.find(id);
     }
 
     @Override

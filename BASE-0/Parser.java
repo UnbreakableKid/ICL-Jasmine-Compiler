@@ -20,10 +20,9 @@ public class Parser implements ParserConstants {
               System.out.println(codeBlock.code.toString());
               codeBlock.code.clear();
             } else {
-                          Environment<Integer> e = new Environment();
-            exp = parser.Start(e);
-
-              System.out.println(exp.eval(e));
+                Environment<Integer> e = new Environment();
+                exp = parser.Start(e);
+                System.out.println(exp.eval(e));
             }
         } catch (Exception e) {
           System.out.println ("Syntax Error!");
