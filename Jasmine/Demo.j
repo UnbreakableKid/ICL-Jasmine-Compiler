@@ -11,7 +11,7 @@
 
 .method public static main([Ljava/lang/String;)V
        ; set limits used by this method
-       .limit locals  4
+       .limit locals 4
        .limit stack 256
 
        ; setup local variables:
@@ -26,6 +26,7 @@
          dup
          invokespecial frame_0/<init>()V
          dup
+         aload_0
          putfield frame_0/sl Ljava/lang/Object;
          dup
          astore_3

@@ -100,7 +100,7 @@ ASTNode Exp() :
 
 ASTNode Term() :
 {
- Token op, n;
+ Token op;
  ASTNode t1, t2;
 }
 {
@@ -113,11 +113,6 @@ ASTNode Term() :
          }
 		)*
 
-|
-   <Def> (n = <Id> <EQ> t1 = Exp())+ <In> t2 = Exp() <End> {
-
-          t1 = new ASTDef(n.image, t1, t2);
-        }
 
      { return t1; } 
 }
@@ -145,8 +140,11 @@ ASTNode Fact() :{
           t = new ASTId(n.image);
         }
 
+        |
+         <Def> (n = <Id> <EQ> t1 = Exp() ) +  <In> t2 = Exp() <End> {
 
-
+          t = new ASTDef(n.image, t1, t2);
+        }
 
         | <LPAR> t=Exp() <RPAR> )
         { return t; }

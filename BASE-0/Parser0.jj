@@ -121,6 +121,7 @@ ASTNode Term() :
 ASTNode Fact() :{
     Token n, m;
     ASTNode t, t1, t2;
+    Map<String, ASTNode> vars = new HashMap<String, ASTNode>();
   }
     {
 
@@ -141,10 +142,9 @@ ASTNode Fact() :{
         }
 
         |
+         <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Exp() <End> {
 
-         <Def> (n = <Id> <EQ> t1 = Exp())+ <In> t2 = Exp() <End> {
-
-          t = new ASTDef(n.image, t1, t2);
+          t = new ASTDef(vars, t2);
         }
 
         | <LPAR> t=Exp() <RPAR> )

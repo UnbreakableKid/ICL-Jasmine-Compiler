@@ -1,21 +1,23 @@
-import java.util.ArrayList;
+import java.util.Map;
 
 class ASTDef implements ASTNode {
-    String id;
-    ASTNode init;
+    Map<String, ASTNode> vars;
     ASTNode body;
 
-    public ASTDef(String i, ASTNode l, ASTNode r) {
-        id = i;
-        init = l;
-        body = r;
+    public ASTDef(Map<String, ASTNode> vars, ASTNode r) {
+        this.vars = vars;
+        this.body = r;
     }
 
     public int eval(Environment e) {
 
-        int v = init.eval(e);
+        int v1;
         e.beginScope();
-        e.assoc(id, v);
+
+        for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
+            v1 = var.getValue().eval(e);
+            e.assoc(var.getKey(), v1);
+        }
         int val = body.eval(e);
         e.endScope();
         return val;
@@ -23,8 +25,6 @@ class ASTDef implements ASTNode {
 
     @Override
     public void compile(CodeBlock c, Environment e) {
-
-       
 
     }
 }

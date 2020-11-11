@@ -1,3 +1,5 @@
+import util.Coordinates;
+
 public class ASTId implements ASTNode {
 
     String id;
@@ -13,7 +15,14 @@ public class ASTId implements ASTNode {
 
     @Override
     public void compile(CodeBlock c, Environment e) {
-        // TODO Auto-generated method stub
+
+        Coordinates x = (Coordinates) e.find(id);
+
+        x.getDepth();
+
+        for (int i = 0; i < x.getDepth(); i++) {
+
+        }
 
     }
 }
