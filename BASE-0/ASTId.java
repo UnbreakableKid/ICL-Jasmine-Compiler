@@ -18,11 +18,40 @@ public class ASTId implements ASTNode {
 
         Coordinates x = (Coordinates) e.find(id);
 
-        x.getDepth();
+        int idDepth = x.getDepth();
 
-        for (int i = 0; i < x.getDepth(); i++) {
+        int current_depth = e.depth() - 2;
+
+        int difference = current_depth - idDepth;
+
+        /*
+         * imagina que está na depth 2 e o id foi definido na 0. fazer load da
+         * frame_2/sl -> frame_1/sl -> frame_0/ valor
+         * 
+         * 
+         * frame para cada def
+         */
+
+        if(difference == 0){
+            c.emit("aload_3");
+            c.emit("getfield frame_" + idDepth + "/" + x.getPosition() + " I");
 
         }
+        else {
+            c.emit("aload_3");
+
+            for (int i = difference; i > 0; i--) {
+
+                c.emit("getfield frame_" + difference + "/sl Lframe_" + (i - 1) +";");
+
+
+            }
+            c.emit("getfield frame_" + idDepth + "/" + x.getPosition() + " I");
+        }
+
+        // getfield frame_0/v1 I
+
+
 
     }
 }

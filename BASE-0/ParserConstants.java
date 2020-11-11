@@ -41,9 +41,9 @@ public interface ParserConstants {
   /** Literal token values. */
   String[] tokenImage = {
     "<EOF>",
-    "\" \"",
     "\"\\t\"",
     "\"\\r\"",
+    "\" \"",
     "\"def\"",
     "\"in\"",
     "\"end\"",

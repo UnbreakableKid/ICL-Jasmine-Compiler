@@ -1,17 +1,16 @@
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
-public class Environment<T> {
+public class Environment<X> {
 
-    ArrayList<Map<String, T>> env;
+    ArrayList<HashMap<String, X>> env;
 
     public Environment() {
         env = new ArrayList<>();
     }
 
     public void beginScope() {
-        Map<String, T> newEnv = new HashMap<>();
+        HashMap<String, X> newEnv = new HashMap<>();
         env.add(newEnv);
     }
 
@@ -19,13 +18,13 @@ public class Environment<T> {
         env.remove(env.size() - 1);
     }
 
-    public void assoc(String id, T val) {
+    public void assoc(String id, X val) {
 
         env.get(env.size() - 1).put(id, val);
 
     }
 
-    public T find(String id) {
+    public X find(String id) {
 
         for (int i = env.size() - 1; i > 0; i--) {
 
