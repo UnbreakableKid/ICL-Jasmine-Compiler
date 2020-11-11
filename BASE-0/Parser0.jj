@@ -1,12 +1,20 @@
 PARSER_BEGIN(Parser)
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.Map;
 
 /** ID lister. */
 public class Parser {
 
   /** Main entry point. */
-  public static void main(String args[]) {
-    Parser parser = new Parser(System.in);
+  public static void main(String args[]) throws FileNotFoundException {
+
+    File file = new File("BASE-0/files/test1.txt");
+
+    Parser parser = new Parser(new FileInputStream(file));
     ASTNode exp;
     CodeBlock codeBlock = new CodeBlock();
 
@@ -38,9 +46,11 @@ PARSER_END(Parser)
 
 SKIP :
 {
-  " "
-| "\t"
-| "\r"
+     "\t"
+   | "\n"
+   | "\r"
+   | " "
+
 }
 
 TOKEN :
@@ -67,8 +77,6 @@ TOKEN :
   |
   < RPAR : ")" >
   |
-  < EL: "\n" >
-  |
   < EQ: "=" >
 
 }
@@ -80,7 +88,7 @@ ASTNode Start(Environment e):
 
 }
 {
-   t = Exp() <EL>
+   t = Exp() < EOF>
    { return t; }
 }
 
