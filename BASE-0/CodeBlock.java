@@ -11,22 +11,37 @@ public class CodeBlock {
 
     /**
      * Function to add the bytecodes
-     * 
+     *
      * @param bytecode
      */
     void emit(String bytecode) {
         code.add(bytecode);
     }
 
+    void remove(){
+        code.remove(code.size()-1);
+    }
+
+
+    void dump() {
+        for (String str : code) {
+            System.out.println(str);
+        }
+    }
+
     /**
-     * 
-     * 
      * @return labels for the thingies
      */
-    String genSymbol() {
-        String result = ("new frame_" + pos);
+    String genFrame() {
+        String result = ("frame_" + pos);
         pos++;
         return result;
+    }
+
+    void initializeFrame(String frame) {
+
+        emit("invokespecial " + frame + "/<init>()V");
+        emit("dup");
     }
 
 }

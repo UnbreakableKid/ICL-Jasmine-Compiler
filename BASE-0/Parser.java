@@ -14,7 +14,9 @@ public class Parser implements ParserConstants {
 
     File file = new File("BASE-0/files/test1.txt");
 
-    Parser parser = new Parser(new FileInputStream(file));
+//    Parser parser = new Parser(new FileInputStream(file));
+    Parser parser = new Parser(System.in);
+
     ASTNode exp;
     CodeBlock codeBlock = new CodeBlock();
 
@@ -26,7 +28,7 @@ public class Parser implements ParserConstants {
             Environment<Integer> e = new Environment();
             exp = parser.Start(e);
               exp.compile(codeBlock, e);
-              System.out.println(codeBlock.code.toString());
+              codeBlock.dump();
               codeBlock.code.clear();
             } else {
                 Environment<Integer> e = new Environment();
@@ -44,7 +46,7 @@ public class Parser implements ParserConstants {
 
  e.beginScope();
     t = Exp();
-    jj_consume_token(0);
+    jj_consume_token(EL);
 {if ("" != null) return t;}
     throw new Error("Missing return statement in function");
 }
@@ -203,7 +205,7 @@ t = new ASTDef(vars, t2);
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0xc00,0xc00,0x3000,0x3000,0x100,0x4b20,};
+	   jj_la1_0 = new int[] {0x600,0x600,0x1800,0x1800,0x80,0x2590,};
 	}
 
   /** Constructor with InputStream. */

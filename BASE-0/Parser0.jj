@@ -14,7 +14,9 @@ public class Parser {
 
     File file = new File("BASE-0/files/test1.txt");
 
-    Parser parser = new Parser(new FileInputStream(file));
+//    Parser parser = new Parser(new FileInputStream(file));
+    Parser parser = new Parser(System.in);
+
     ASTNode exp;
     CodeBlock codeBlock = new CodeBlock();
 
@@ -26,7 +28,7 @@ public class Parser {
             Environment<Integer> e = new Environment();
             exp = parser.Start(e);
               exp.compile(codeBlock, e);
-              System.out.println(codeBlock.code.toString());
+              codeBlock.dump();
               codeBlock.code.clear();
             } else {
                 Environment<Integer> e = new Environment();
@@ -47,7 +49,6 @@ PARSER_END(Parser)
 SKIP :
 {
      "\t"
-   | "\n"
    | "\r"
    | " "
 
@@ -77,6 +78,8 @@ TOKEN :
   |
   < RPAR : ")" >
   |
+  <EL : "\n">
+  |
   < EQ: "=" >
 
 }
@@ -88,7 +91,7 @@ ASTNode Start(Environment e):
 
 }
 {
-   t = Exp() < EOF>
+   t = Exp() <EL>
    { return t; }
 }
 
