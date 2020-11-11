@@ -34,12 +34,13 @@ public class Parser implements ParserConstants {
     }
   }
 
-  static final public ASTNode Start(Environment e) throws ParseException {ASTNode t;
+  static final public ASTNode Start(Environment e) throws ParseException {
+      ASTNode t;
 
- e.beginScope();
+      e.beginScope();
     t = Exp();
     jj_consume_token(EL);
-{if ("" != null) return t;}
+    {if ("" != null) return t;}
     throw new Error("Missing return statement in function");
 }
 
