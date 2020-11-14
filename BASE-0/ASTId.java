@@ -24,7 +24,6 @@ public class ASTId implements ASTNode {
 
         int difference = current_depth - idDepth;
 
-        System.out.println(difference);
         /*
          * imagina que está na depth 2 e o id foi definido na 0. fazer load da
          * frame_2/sl -> frame_1/sl -> frame_0/ valor

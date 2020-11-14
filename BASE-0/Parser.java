@@ -85,9 +85,14 @@ public class Parser implements ParserConstants {
       jj_consume_token(0);
       break;
       }
+    case EL:{
+      jj_consume_token(EL);
+      break;
+      }
     default:
       jj_la1[0] = jj_gen;
-      ;
+      jj_consume_token(-1);
+      throw new ParseException();
     }
 {if ("" != null) return t;}
     throw new Error("Missing return statement in function");
@@ -247,7 +252,7 @@ t = new ASTDef(vars, t2);
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x1,0xc00,0xc00,0x3000,0x3000,0x100,0x4b20,};
+	   jj_la1_0 = new int[] {0x8001,0x600,0x600,0x1800,0x1800,0x80,0x2590,};
 	}
 
   /** Constructor with InputStream. */

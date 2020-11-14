@@ -84,7 +84,6 @@ PARSER_END(Parser)
 SKIP :
 {
      "\t"
-   | "\n"
    | "\r"
    | " "
 
@@ -114,6 +113,8 @@ TOKEN :
   |
   < RPAR : ")" >
   |
+  <EL : "\n">
+  |
   < EQ: "=" >
 
 }
@@ -121,7 +122,7 @@ TOKEN :
 ASTNode Start():
 { ASTNode t;}
 {
-   t = Exp()  (<EOF>)?
+   t = Exp()  (<EOF> | <EL>)
    { return t; }
 }
 
