@@ -40,11 +40,6 @@ public class ASTId implements ASTNode {
 
             }
 
-
         c.emit("getfield frame_" + (idDepth-1) + "/" + x.getPosition() + " I");
-
-        // getfield frame_0/v1 I
-
-
     }
 }
