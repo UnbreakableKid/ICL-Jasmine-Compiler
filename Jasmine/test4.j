@@ -1,4 +1,4 @@
-.class public test3
+.class public test4
 .super java/lang/Object
 
 .method public <init>()V
@@ -20,48 +20,29 @@ getstatic java/lang/System/out Ljava/io/PrintStream;
 	dup
 	astore_3
 	dup
-	sipush 2
+	sipush 5
 	putfield frame_0/v0 I
-	pop
-	new frame_1
 	dup
-	invokespecial frame_1/<init>()V
-	dup
-	aload_3
-	putfield frame_1/sl Lframe_0;
-	dup
-	astore_3
-	dup
-	new frame_2
-	dup
-	invokespecial frame_2/<init>()V
+	sipush 3
+	putfield frame_0/v1 I
 	dup
 	aload_3
-	putfield frame_2/sl Lframe_1;
-	dup
-	astore_3
-	dup
-	aload_3
-	getfield frame_2/sl Lframe_1;
-	getfield frame_1/sl Lframe_0;
 	getfield frame_0/v0 I
-	sipush 1
+	sipush 4
 	iadd
-	putfield frame_2/v0 I
+	aload_3
+	getfield frame_0/v1 I
+	iadd
+	putfield frame_0/v2 I
 	pop
 	aload_3
-	getfield frame_2/v0 I
-	aload_3
-	getfield frame_2/v0 I
-	iadd
-	putfield frame_1/v0 I
-	pop
-	aload_3
-	getfield frame_1/sl Lframe_0;
 	getfield frame_0/v0 I
 	aload_3
-	getfield frame_1/v0 I
-	imul
+	getfield frame_0/v1 I
+	iadd
+	aload_3
+	getfield frame_0/v2 I
+	iadd
 
 	invokestatic java/lang/String/valueOf(I)Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
