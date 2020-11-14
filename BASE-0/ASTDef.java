@@ -13,28 +13,28 @@ class ASTDef implements ASTNode {
 
     public int eval(Environment e) {
 
-        int v1;
-        e.beginScope();
+        int val;
+        Environment new_e = e.beginScope();
 
         for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
-            v1 = var.getValue().eval(e);
-            e.assoc(var.getKey(), v1);
+            val = var.getValue().eval(new_e);
+            new_e.assoc(var.getKey(), val);
         }
-        int val = body.eval(e);
-        e.endScope();
+        val = body.eval(new_e);
+        e = new_e.endScope();
         return val;
     }
 
     @Override
     public void compile(CodeBlock c, Environment e) {
 
-        e.beginScope();
+        Environment new_e = e.beginScope();
         String frame = c.genFrame();
         c.emit("new " + frame);
         c.emit("dup");
         c.initializeFrame(frame);
 
-        int current_depth = e.depth() - 2;
+        int current_depth = new_e.depth();
 
         if (current_depth == 0) {
             c.emit("aload_0");
@@ -47,25 +47,25 @@ class ASTDef implements ASTNode {
         c.emit("dup");
 
         c.emit("astore_3");
-        c.emit("dup");
+        //c.emit("dup");
 
         int variableCount = 0;
 
         for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
+            c.emit("dup");
             var.getValue().compile(c, e);
             String pos = "v" + variableCount;
-            e.assoc(var.getKey(), new Coordinates(pos, current_depth));
+            new_e.assoc(var.getKey(), new Coordinates(pos, current_depth));
             c.emit("putfield frame_" + current_depth + "/" + pos + " I");
-            c.emit("dup");
+            //c.emit("dup");
             variableCount++;
-
         }
 
-        c.remove();
+        //c.remove("dup");
         c.emit("pop");
-        body.compile(c, e);
+        body.compile(c, new_e);
 
-        e.endScope();
+        e = new_e.endScope();
 
     }
 }

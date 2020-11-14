@@ -9,46 +9,79 @@ import java.util.Map;
 /** ID lister. */
 public class Parser implements ParserConstants {
 
+  static final String DEFAULT_FOLDER = "BASE-0/files/%s.txt";
+
   /** Main entry point. */
-  public static void main(String args[]) throws FileNotFoundException {
+  public static void main(String []args) {
 
-    File file = new File("BASE-0/files/test1.txt");
+        String filename = null;
 
-//    Parser parser = new Parser(new FileInputStream(file));
-    Parser parser = new Parser(System.in);
-
-    ASTNode exp;
-    CodeBlock codeBlock = new CodeBlock();
-
-
-
-    while (true) {
-          try {
-            if ((args.length > 0) && (args[0].compareTo("-c")) == 0) {
-            Environment<Integer> e = new Environment();
-            exp = parser.Start(e);
-              exp.compile(codeBlock, e);
-              codeBlock.dump();
-              codeBlock.code.clear();
-            } else {
-                Environment<Integer> e = new Environment();
-                exp = parser.Start(e);
-                System.out.println(exp.eval(e));
+        switch(args.length){
+        case 0: break;
+        case 1:
+            System.out.println("Wrong arguments: "+args[0]+".\nTry '-c File_Name' to compile or just run to interpreter.");
+            System.exit(1);
+        case 2:
+            if(!args[0].equalsIgnoreCase("-c") ){
+                System.out.println("Flag '-c' expected to compile, but "+args[0]+" received");
+                System.exit(1);
             }
-        } catch (Exception e) {
-          System.out.println ("Syntax Error!");
-          parser.ReInit(System.in);
+            filename = String.format(DEFAULT_FOLDER,args[1]);
+            break;
+        default:
+            System.out.println("Wrong arguments.\nTry '-c File_Name' to compile or just run to interpreter.");
+            System.exit(1);
         }
-    }
+
+        Parser parser;
+
+        if(filename != null){
+            try{
+                parser = new Parser(new FileInputStream(filename));
+            }
+            catch(FileNotFoundException e){
+                System.out.println(e.getMessage());
+                System.exit(1);
+                return;
+            }
+            compiler(parser,args[1]);
+        }
+        else{
+            parser = new Parser(System.in);
+            interpreter(parser);
+        }
   }
 
-  static final public ASTNode Start(Environment e) throws ParseException {
-      ASTNode t;
+  private static void compiler(Parser parser, String filename){
+        Environment<Integer> env = new Environment<>();
+        ASTNode exp;
+        CodeBlock codeBlock = new CodeBlock();
+        try{
+            exp = parser.Start();
+            exp.compile(codeBlock, env);
+            codeBlock.dump(filename);
+            //codeBlock.code.clear();
+        }catch(Exception e) {System.out.println("Syntax Error!");}
+  }
 
-      e.beginScope();
+  private static void interpreter(Parser parser){
+        Environment<Integer> env = new Environment<>();
+        ASTNode exp;
+        while(true){
+            try{
+                exp = parser.Start();
+                System.out.println(exp.eval(env));
+            } catch(Exception e){
+                System.out.println("Syntax Error!");
+                parser.ReInit(System.in);
+            }
+        }
+  }
+
+  static final public ASTNode Start() throws ParseException {ASTNode t;
     t = Exp();
     jj_consume_token(EL);
-    {if ("" != null) return t;}
+{if ("" != null) return t;}
     throw new Error("Missing return statement in function");
 }
 
@@ -131,8 +164,8 @@ if (op.kind == TIMES)
 }
 
   static final public ASTNode Fact() throws ParseException {Token n, m;
-    ASTNode t, t1, t2;
-    Map<String, ASTNode> vars = new HashMap<String, ASTNode>();
+  ASTNode t, t1, t2;
+  Map<String, ASTNode> vars = new HashMap<>();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case MINUS:{
       jj_consume_token(MINUS);

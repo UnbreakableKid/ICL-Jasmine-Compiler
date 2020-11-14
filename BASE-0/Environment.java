@@ -1,42 +1,50 @@
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
-public class Environment<X> {
+public class Environment<T> {
 
-    ArrayList<HashMap<String, X>> env;
+    private Environment<T> ancestor;
+    private Map<String, T> env;
+    private int depth;
 
     public Environment() {
-        env = new ArrayList<>();
+        ancestor = null;
+        env = new HashMap<>();
+        depth = 0;
     }
 
-    public void beginScope() {
-        HashMap<String, X> newEnv = new HashMap<>();
-        env.add(newEnv);
+    public Environment(Environment<T> actual2ancestor) {
+        ancestor = actual2ancestor;
+        env = new HashMap<>();
+        depth = actual2ancestor.depth() + 1;
     }
 
-    public void endScope() {
-        env.remove(env.size() - 1);
+    public Environment<T> beginScope() {
+        return new Environment<T>(this);
     }
 
-    public void assoc(String id, X val) {
-
-        env.get(env.size() - 1).put(id, val);
-
+    public Environment<T> endScope() {
+        return ancestor;
     }
 
-    public X find(String id) {
+    public void assoc(String id, T val) {
+        if(env.containsKey(id))
+            throw new RuntimeException("IDDeclaredTwice");
+        env.put(id, val);
+    }
 
-        for (int i = env.size() - 1; i > 0; i--) {
-
-            if (env.get(i).get(id) != null) {
-                return env.get(i).get(id);
-            }
-        }
-        return env.get(env.size() - 1).get(id);
+    public T find(String id) {
+        T val = env.get(id);
+        if(val == null)
+            if(ancestor == null)
+                throw new RuntimeException("Undeclared Variable");
+            else
+                val = ancestor.find(id);
+        return val;
 
     }
 
     public int depth() {
-        return env.size();
+        return depth;
     }
 }
