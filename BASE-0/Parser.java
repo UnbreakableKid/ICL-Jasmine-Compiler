@@ -80,7 +80,7 @@ public class Parser implements ParserConstants {
 
   static final public ASTNode Start() throws ParseException {ASTNode t;
     t = Exp();
-    jj_consume_token(EL);
+    jj_consume_token(0);
 {if ("" != null) return t;}
     throw new Error("Missing return statement in function");
 }
@@ -239,7 +239,7 @@ t = new ASTDef(vars, t2);
 	   jj_la1_init_0();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x600,0x600,0x1800,0x1800,0x80,0x2590,};
+	   jj_la1_0 = new int[] {0xc00,0xc00,0x3000,0x3000,0x100,0x4b20,};
 	}
 
   /** Constructor with InputStream. */
