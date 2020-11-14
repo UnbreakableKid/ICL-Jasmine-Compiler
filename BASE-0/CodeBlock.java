@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class CodeBlock {
     StringBuffer code;
     int pos;
-    private int LOCAL_LIMIT = 2;
+    private int LOCAL_LIMIT = 4;
     private int STACK_LIMIT = 256;
 
     public CodeBlock() {

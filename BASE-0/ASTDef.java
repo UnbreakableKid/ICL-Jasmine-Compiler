@@ -36,12 +36,12 @@ class ASTDef implements ASTNode {
 
         int current_depth = new_e.depth();
 
-        if (current_depth == 0) {
+        if (current_depth == 1) {
             c.emit("aload_0");
             c.emit("putfield frame_0/sl Ljava/lang/Object;");
         } else {
             c.emit("aload_3");
-            c.emit("putfield frame_" + (current_depth) + "/sl Lframe_" + (current_depth-1) + ";");
+            c.emit("putfield frame_" + (current_depth-1) + "/sl Lframe_" + (current_depth-2) + ";");
         }
 
         c.emit("dup");
@@ -53,11 +53,10 @@ class ASTDef implements ASTNode {
 
         for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
             c.emit("dup");
-            var.getValue().compile(c, e);
+            var.getValue().compile(c, new_e);
             String pos = "v" + variableCount;
             new_e.assoc(var.getKey(), new Coordinates(pos, current_depth));
-            c.emit("putfield frame_" + current_depth + "/" + pos + " I");
-            //c.emit("dup");
+            c.emit("putfield frame_" + (current_depth-1) + "/" + pos + " I");
             variableCount++;
         }
 
