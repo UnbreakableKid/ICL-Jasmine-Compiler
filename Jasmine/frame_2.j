@@ -1,6 +1,6 @@
-.class public frame_0
+.class public frame_2
 .super java/lang/Object
-.field public sl Ljava/lang/Object;
+.field public sl Lframe_1;
 	.field public v0 I
 .method public <init>()V
 aload_0

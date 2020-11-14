@@ -1,5 +1,6 @@
 import util.Coordinates;
 
+import java.io.*;
 import java.util.Map;
 
 class ASTDef implements ASTNode {
@@ -25,6 +26,9 @@ class ASTDef implements ASTNode {
         return val;
     }
 
+    static final String DEFAULT_FOLDER = "Jasmine/";
+
+
     @Override
     public void compile(CodeBlock c, Environment e) {
 
@@ -34,14 +38,26 @@ class ASTDef implements ASTNode {
         c.emit("dup");
         c.initializeFrame(frame);
 
+        String file_j = String.format("%s.j",frame);
+
+        try{
+
+            BufferedWriter out = new BufferedWriter(new FileWriter(new File(DEFAULT_FOLDER + file_j)));
+
+            out.write(".class public " + frame +"\n");
+            out.write(".super java/lang/Object\n");
+
+
         int current_depth = new_e.depth();
 
         if (current_depth == 1) {
             c.emit("aload_0");
             c.emit("putfield frame_0/sl Ljava/lang/Object;");
+            out.write(".field public sl Ljava/lang/Object;\n");
         } else {
             c.emit("aload_3");
             c.emit("putfield frame_" + (current_depth-1) + "/sl Lframe_" + (current_depth-2) + ";");
+            out.write(".field public sl Lframe_" + (current_depth-2)+";\n");
         }
 
         c.emit("dup");
@@ -57,14 +73,24 @@ class ASTDef implements ASTNode {
             String pos = "v" + variableCount;
             new_e.assoc(var.getKey(), new Coordinates(pos, current_depth));
             c.emit("putfield frame_" + (current_depth-1) + "/" + pos + " I");
+            out.write("\t.field public " + pos+ " I\n");
             variableCount++;
         }
 
+        out.write(".method public <init>()V\n");
+        out.write("aload_0\n");
+        out.write("invokenonvirtual java/lang/Object/<init>()V\n");
+        out.write("return\n");
+        out.write(".end method\n");
+            out.flush();
+            out.close();
         //c.remove("dup");
         c.emit("pop");
         body.compile(c, new_e);
 
         e = new_e.endScope();
-
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 }

@@ -159,7 +159,6 @@ ASTNode Term() :
      { return t1; } 
 }
 
-
 ASTNode Fact() :{
   Token n, m;
   ASTNode t, t1, t2;

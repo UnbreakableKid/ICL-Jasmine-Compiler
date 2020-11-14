@@ -14,6 +14,8 @@ public class CodeBlock {
         pos = 0;
     }
 
+    static final String DEFAULT_FOLDER = "Jasmine/";
+
     /**
      * Function to add the bytecodes
      *
@@ -41,7 +43,7 @@ public class CodeBlock {
                 break;
         }
         String file_j = String.format("%s.j",filename);
-        BufferedWriter out = new BufferedWriter(new FileWriter(file_j));
+        BufferedWriter out = new BufferedWriter(new FileWriter(DEFAULT_FOLDER + file_j));
         StringBuffer init = generateInit(filename, local, stack);
 
         StringBuffer end = generateEnd();
