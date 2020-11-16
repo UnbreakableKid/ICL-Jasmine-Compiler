@@ -63,7 +63,6 @@ class ASTDef implements ASTNode {
         c.emit("dup");
 
         c.emit("astore_3");
-        //c.emit("dup");
 
         int variableCount = 0;
 
@@ -84,9 +83,12 @@ class ASTDef implements ASTNode {
         out.write(".end method\n");
             out.flush();
             out.close();
-        //c.remove("dup");
         c.emit("pop");
         body.compile(c, new_e);
+        c.emit("aload_3");
+        String sl = (current_depth-1 <= 0)? "java/lang/Object":"frame_"+(current_depth-2);
+        c.emit("getfield frame_" + (current_depth-1) + "/sl L" + sl + ";");
+        c.emit("astore_3");
 
         e = new_e.endScope();
         } catch (IOException ioException) {
