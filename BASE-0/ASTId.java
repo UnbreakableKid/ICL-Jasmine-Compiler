@@ -24,22 +24,26 @@ public class ASTId implements ASTNode {
 
         int difference = current_depth - idDepth;
 
+        System.out.println(difference);
+
         /*
          * imagina que está na depth 2 e o id foi definido na 0. fazer load da
          * frame_2/sl -> frame_1/sl -> frame_0/ valor
-         * 
-         * 
+         *
+         *
          * frame para cada def
          */
 
         c.emit("aload_3");
 
-            for (int i = difference; i > 0; i--) {
+        int i = difference;
+        int d = current_depth-1;
+        while (i != 0) {
+            c.emit("getfield frame_" + d + "/sl Lframe_" + (d - 1) + ";");
+            i--;
+            d--;
+        }
 
-                c.emit("getfield frame_" + i + "/sl Lframe_" + (i - 1) + ";");
-
-            }
-
-        c.emit("getfield frame_" + (idDepth-1) + "/" + x.getPosition() + " I");
+        c.emit("getfield frame_" + (idDepth - 1) + "/" + x.getPosition() + " I");
     }
 }

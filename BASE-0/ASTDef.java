@@ -33,7 +33,9 @@ class ASTDef implements ASTNode {
     public void compile(CodeBlock c, Environment e) {
 
         Environment new_e = e.beginScope();
-        String frame = c.genFrame();
+        int current_depth = new_e.depth();
+
+        String frame = c.genFrame(current_depth-1);
         c.emit("new " + frame);
         c.emit("dup");
         c.initializeFrame(frame);
@@ -46,9 +48,6 @@ class ASTDef implements ASTNode {
 
             out.write(".class public " + frame +"\n");
             out.write(".super java/lang/Object\n");
-
-
-        int current_depth = new_e.depth();
 
         if (current_depth == 1) {
             c.emit("aload_0");
@@ -81,8 +80,8 @@ class ASTDef implements ASTNode {
         out.write("invokenonvirtual java/lang/Object/<init>()V\n");
         out.write("return\n");
         out.write(".end method\n");
-            out.flush();
-            out.close();
+        out.flush();
+        out.close();
         c.emit("pop");
         body.compile(c, new_e);
         c.emit("aload_3");

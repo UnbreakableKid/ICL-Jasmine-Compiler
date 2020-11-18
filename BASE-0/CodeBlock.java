@@ -1,17 +1,16 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CodeBlock {
     StringBuffer code;
-    int pos;
+    int frameCount;
     private int LOCAL_LIMIT = 4;
     private int STACK_LIMIT = 256;
 
     public CodeBlock() {
         code = new StringBuffer();
-        pos = 0;
+        frameCount = 0;
     }
 
     static final String DEFAULT_FOLDER = "Jasmine/";
@@ -82,9 +81,9 @@ public class CodeBlock {
     /**
      * @return labels for the thingies
      */
-    String genFrame() {
-        String result = ("frame_" + pos);
-        pos++;
+    String genFrame(int x) {
+        String result = ("frame_" + x);
+        frameCount++;
         return result;
     }
 
