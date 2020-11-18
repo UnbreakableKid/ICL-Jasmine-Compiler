@@ -1,5 +1,6 @@
 import util.Coordinates;
 
+import java.io.*;
 import java.util.Map;
 
 class ASTDef implements ASTNode {
@@ -13,59 +14,84 @@ class ASTDef implements ASTNode {
 
     public int eval(Environment e) {
 
-        int v1;
-        e.beginScope();
+        int val;
+        Environment new_e = e.beginScope();
 
         for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
-            v1 = var.getValue().eval(e);
-            e.assoc(var.getKey(), v1);
+            val = var.getValue().eval(new_e);
+            new_e.assoc(var.getKey(), val);
         }
-        int val = body.eval(e);
-        e.endScope();
+        val = body.eval(new_e);
+        e = new_e.endScope();
         return val;
     }
+
+    static final String DEFAULT_FOLDER = "Jasmine/";
+
 
     @Override
     public void compile(CodeBlock c, Environment e) {
 
-        e.beginScope();
-        String frame = c.genFrame();
+        Environment new_e = e.beginScope();
+        int current_depth = new_e.depth();
+
+        String frame = c.genFrame(current_depth-1);
         c.emit("new " + frame);
         c.emit("dup");
         c.initializeFrame(frame);
 
-        int current_depth = e.depth() - 2;
+        String file_j = String.format("%s.j",frame);
 
-        if (current_depth == 0) {
+        try{
+
+            BufferedWriter out = new BufferedWriter(new FileWriter(new File(DEFAULT_FOLDER + file_j)));
+
+            out.write(".class public " + frame +"\n");
+            out.write(".super java/lang/Object\n");
+
+        if (current_depth == 1) {
             c.emit("aload_0");
             c.emit("putfield frame_0/sl Ljava/lang/Object;");
+            out.write(".field public sl Ljava/lang/Object;\n");
         } else {
             c.emit("aload_3");
-            c.emit("putfield frame_" + (current_depth) + "/sl Lframe_" + (current_depth-1) + ";");
+            c.emit("putfield frame_" + (current_depth-1) + "/sl Lframe_" + (current_depth-2) + ";");
+            out.write(".field public sl Lframe_" + (current_depth-2)+";\n");
         }
 
         c.emit("dup");
 
         c.emit("astore_3");
-        c.emit("dup");
 
         int variableCount = 0;
 
         for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
-            var.getValue().compile(c, e);
-            String pos = "v" + variableCount;
-            e.assoc(var.getKey(), new Coordinates(pos, current_depth));
-            c.emit("putfield frame_" + current_depth + "/" + pos + " I");
             c.emit("dup");
+            var.getValue().compile(c, new_e);
+            String pos = "v" + variableCount;
+            new_e.assoc(var.getKey(), new Coordinates(pos, current_depth));
+            c.emit("putfield frame_" + (current_depth-1) + "/" + pos + " I");
+            out.write("\t.field public " + pos+ " I\n");
             variableCount++;
-
         }
 
-        c.remove();
+        out.write(".method public <init>()V\n");
+        out.write("aload_0\n");
+        out.write("invokenonvirtual java/lang/Object/<init>()V\n");
+        out.write("return\n");
+        out.write(".end method\n");
+        out.flush();
+        out.close();
         c.emit("pop");
-        body.compile(c, e);
+        body.compile(c, new_e);
+        c.emit("aload_3");
+        String sl = (current_depth-1 <= 0)? "java/lang/Object":"frame_"+(current_depth-2);
+        c.emit("getfield frame_" + (current_depth-1) + "/sl L" + sl + ";");
+        c.emit("astore_3");
 
-        e.endScope();
-
+        e = new_e.endScope();
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 }
