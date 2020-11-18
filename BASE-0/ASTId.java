@@ -38,11 +38,12 @@ public class ASTId implements ASTNode {
 
         int i = difference;
         int d = current_depth-1;
-        while (i != 0) {
+
+        do {
             c.emit("getfield frame_" + d + "/sl Lframe_" + (d - 1) + ";");
             i--;
             d--;
-        }
+        } while (i != 0);
 
         c.emit("getfield frame_" + (idDepth - 1) + "/" + x.getPosition() + " I");
     }
