@@ -1,1 +1,1 @@
-def x = 3 in def y=2 in def z = 3 in x+x end end end
+def x = 2 y = 3 in def k = x + y in x + y + k end end
