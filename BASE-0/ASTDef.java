@@ -4,6 +4,8 @@ import java.io.*;
 import java.util.Map;
 
 class ASTDef implements ASTNode {
+
+    static final String DEFAULT_FOLDER = "Jasmine/";
     Map<String, ASTNode> vars;
     ASTNode body;
 
@@ -25,9 +27,6 @@ class ASTDef implements ASTNode {
         e = new_e.endScope();
         return val;
     }
-
-    static final String DEFAULT_FOLDER = "Jasmine/";
-
 
     @Override
     public void compile(CodeBlock c, Environment e) {

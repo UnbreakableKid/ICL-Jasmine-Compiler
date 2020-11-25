@@ -1,5 +1,6 @@
 public class ASTPlus implements ASTNode {
 
+    private static final String BYTECODE = "iadd";
     ASTNode lhs, rhs;
 
     public ASTPlus(ASTNode l, ASTNode r) {
@@ -10,12 +11,10 @@ public class ASTPlus implements ASTNode {
     public void compile(CodeBlock c, Environment e) {
         lhs.compile(c, e);
         rhs.compile(c, e);
-        c.emit("iadd");
+        c.emit(BYTECODE);
     }
 
     public int eval(Environment e) {
-        int v1 = lhs.eval(e);
-        int v2 = rhs.eval(e);
-        return v1 + v2;
+        return lhs.eval(e) + rhs.eval(e);
     }
 }

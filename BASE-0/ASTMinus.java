@@ -1,5 +1,6 @@
 public class ASTMinus implements ASTNode {
 
+    public static final String BYTECODE = "isub";
     ASTNode lhs, rhs;
 
     public ASTMinus(ASTNode l, ASTNode r) {
@@ -8,9 +9,7 @@ public class ASTMinus implements ASTNode {
     }
 
     public int eval(Environment e) {
-        int v1 = lhs.eval(e);
-        int v2 = rhs.eval(e);
-        return v1 - v2;
+        return lhs.eval(e) - rhs.eval(e);
     }
 
     @Override
@@ -18,6 +17,6 @@ public class ASTMinus implements ASTNode {
 
         lhs.compile(c, e);
         rhs.compile(c, e);
-        c.emit("isub");
+        c.emit(BYTECODE);
     }
 }

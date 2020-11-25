@@ -1,5 +1,6 @@
 public class ASTMul implements ASTNode {
 
+    public static final String BYTECODE = "imul";
     ASTNode lhs, rhs;
 
     public ASTMul(ASTNode l, ASTNode r) {
@@ -9,15 +10,13 @@ public class ASTMul implements ASTNode {
 
     @Override
     public int eval(Environment e) {
-        int v1 = lhs.eval(e);
-        int v2 = rhs.eval(e);
-        return v1 * v2;
+        return lhs.eval(e) * rhs.eval(e);
     }
 
     @Override
     public void compile(CodeBlock c, Environment e) {
         lhs.compile(c, e);
         rhs.compile(c, e);
-        c.emit("imul");
+        c.emit(BYTECODE);
     }
 }
