@@ -68,9 +68,9 @@ class ASTDef implements ASTNode {
             c.emit("dup");
             var.getValue().compile(c, new_e);
             String pos = "v" + variableCount;
-            new_e.assoc(var.getKey(), new Coordinates(pos, current_depth));
             c.emit("putfield frame_" + (current_depth-1) + "/" + pos + " I");
             out.write("\t.field public " + pos+ " I\n");
+            new_e.assoc(var.getKey(), new Coordinates(pos, current_depth));
             variableCount++;
         }
 
