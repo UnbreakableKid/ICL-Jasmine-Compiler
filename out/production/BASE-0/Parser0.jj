@@ -70,6 +70,11 @@ public class Parser {
         while(true){
             try{
                 exp = parser.Start();
+
+                if(exp == null){
+                    System.out.println("Shutting down...");
+                    System.exit(1);
+                }
                 System.out.println(exp.eval(env));
             } catch(Exception e){
                 System.out.println("Syntax Error!");
@@ -96,7 +101,9 @@ TOKEN :
   < In: "in" >
   |
   < End: "end" >
-  |
+
+    | <EXIT: "quit"|"QUIT"|"Quit"|"exit"|"EXIT"|"Exit">
+|
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
   |
   < Num: (["0"-"9"]) + >
@@ -122,8 +129,13 @@ TOKEN :
 ASTNode Start():
 { ASTNode t;}
 {
+
+<EXIT> {return null;}
+|
    t = Exp()  (<EOF> | <EL>)
-   { return t; }
+    { return t; }
+
+
 }
 
 ASTNode Exp() :
