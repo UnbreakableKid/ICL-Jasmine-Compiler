@@ -4,13 +4,11 @@ import java.io.IOException;
 
 public class CodeBlock {
     StringBuffer code;
-    int frameCount;
     private int LOCAL_LIMIT = 4;
     private int STACK_LIMIT = 256;
 
     public CodeBlock() {
         code = new StringBuffer();
-        frameCount = 0;
     }
 
     static final String DEFAULT_FOLDER = "Jasmine/";
@@ -77,20 +75,4 @@ public class CodeBlock {
         initial.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
         return initial;
     }
-
-    /**
-     * @return labels for the thingies
-     */
-    String genFrame(int x) {
-        String result = ("frame_" + x);
-        frameCount++;
-        return result;
-    }
-
-    void initializeFrame(String frame) {
-
-        emit("invokespecial " + frame + "/<init>()V");
-        emit("dup");
-    }
-
 }
