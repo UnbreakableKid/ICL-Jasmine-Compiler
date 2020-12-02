@@ -14,9 +14,9 @@ class ASTDef implements ASTNode {
         this.body = r;
     }
 
-    public int eval(Environment env) {
+    public IValue eval(Environment env) {
 
-        int val;
+        IValue val;
         Environment new_e = env.beginScope();
 
         for (Map.Entry<String, ASTNode> var : vars.entrySet()) {

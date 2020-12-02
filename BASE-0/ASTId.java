@@ -8,9 +8,9 @@ public class ASTId implements ASTNode {
         id = i;
     }
 
-    public int eval(Environment e) {
+    public IValue eval(Environment e) {
 
-        return (int) e.find(id);
+        return (VInt) e.find(id);
     }
 
     @Override

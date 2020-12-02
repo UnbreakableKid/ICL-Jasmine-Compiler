@@ -101,9 +101,26 @@ TOKEN :
   < In: "in" >
   |
   < End: "end" >
+  |
+  <EXIT: "quit"|"QUIT"|"Quit"|"exit"|"EXIT"|"Exit">
+  |
+  <NEW: "new">
+  |
+  <IF: "if">
+  |
+  <ELSE: "else">
+  |
+  <THEN: "then">
+  |
+  <WHILE: "while">
+  |
+  <DO: "do">
+  |
+  <PRINT: "print">
+  |
+  <PRINTLN: "println">
 
-    | <EXIT: "quit"|"QUIT"|"Quit"|"exit"|"EXIT"|"Exit">
-|
+  |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
   |
   < Num: (["0"-"9"]) + >
@@ -123,6 +140,10 @@ TOKEN :
   <EL : "\n">
   |
   < EQ: "=" >
+  |
+  <EQUALS : "==">
+  |
+  <ASSIGN: ":=">
 
 }
 
@@ -142,14 +163,24 @@ ASTNode Exp() :
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term()
-                 { if (op.kind == PLUS) 
-                        t1 = new ASTPlus(t1,t2);
-                   else
-                        t1 = new ASTMinus(t1,t2);
-                 } 
-               )*
-     { return t1; } 
+     t1=EA() (<EQUALS> t2 = EA() | <ASSIGN> t2 = EA() )?
+
+     {return t1;}
+}
+
+ASTNode EA():
+{ Token op;
+  ASTNode t1, t2;
+}
+{
+   t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term()
+                  { if (op.kind == PLUS)
+                         t1 = new ASTPlus(t1,t2);
+                    else
+                         t1 = new ASTMinus(t1,t2);
+                  }
+                )*
+      { return t1; }
 }
 
 ASTNode Term() :
@@ -181,14 +212,15 @@ ASTNode Fact() :{
         (
 
         <MINUS> n=<Num> {
-                int z = Integer.parseInt(n.image);
-                t = new ASTNum(-z);
+                VInt z = new VInt(Integer.parseInt(n.image));
+                z.v = -z.v;
+                t = new ASTNum(z);
 
         }
 
         | n=<Num> {
-            t = new ASTNum(Integer.parseInt(n.image));
-        }
+                VInt z = new VInt(Integer.parseInt(n.image));
+                t = new ASTNum(z);        }
         | n=<Id> {
 
           t = new ASTId(n.image);
