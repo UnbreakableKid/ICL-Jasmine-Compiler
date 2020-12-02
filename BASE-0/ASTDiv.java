@@ -3,8 +3,17 @@ public class ASTDiv implements ASTNode {
     public static final String BYTECODE = "idiv";
     ASTNode lhs, rhs;
 
-    public int eval(Environment e) {
-        return lhs.eval(e) / rhs.eval(e);
+    public IValue eval(Environment env) {
+        IValue v1 = lhs.eval(env);
+        if (v1 instanceof VInt) {
+            IValue v2 = rhs.eval(env);
+            if (v2 instanceof VInt) {
+                return new VInt(((VInt) v1).getval() / ((VInt) v2).getval());
+            }
+            throw new Error(" +:argument is not an integer");
+        }
+        throw new Error(" +:argument is not an integer");
+
     }
 
     public ASTDiv(ASTNode l, ASTNode r) {
