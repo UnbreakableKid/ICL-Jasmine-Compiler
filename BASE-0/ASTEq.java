@@ -13,8 +13,14 @@ public class ASTEq implements ASTNode {
         IValue v1 = lhs.eval(env);
         IValue v2 = rhs.eval(env);
 
-        return new VBool(v1.equals(v2));
+        if (v1 instanceof VInt && v2 instanceof VInt){
+            return new VBool(((VInt) v1).getval() == ((VInt) v2).getval());
+        }
 
+        if (v1 instanceof VBool && v2 instanceof VBool){
+            return new VBool(((VBool) v1).getval() == ((VBool) v2).getval());
+        }
+        return new VBool(false);
     }
     @Override
     public void compile(CodeBlock c, Environment e) {

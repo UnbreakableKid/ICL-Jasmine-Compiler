@@ -21,6 +21,18 @@ public class ASTIf implements ASTNode {
     }
     @Override
     public void compile(CodeBlock c, Environment e) {
+        int labels = c.genLabels(3);
+
+        String trueB = "L" + labels;
+        String elseB = "L" + labels+1;
+        String endB = "L" + labels+2;
+
+        condition.compile(c,e);
+        body.compile(c,e);
+        c.emit("goto " + endB);
+        c.emit(elseB + ":");
+        elsebody.compile(c,e);
+        c.emit(endB + ":");
 
     }
 }

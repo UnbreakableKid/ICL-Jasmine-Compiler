@@ -255,6 +255,8 @@ if (op.kind == TIMES)
   static final public ASTNode Comp() throws ParseException {ASTNode t1, t2;
     t1 = Exp();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case OR:
+    case AND:
     case EQ:
     case LEQ:
     case BEQ:
@@ -289,6 +291,18 @@ t1 = new ASTLessOrEqual(t1,t2);
         jj_consume_token(BEQ);
         t2 = Exp();
 t1 = new ASTBiggerOrEqual(t1,t2);
+        break;
+        }
+      case AND:{
+        jj_consume_token(AND);
+        t2 = Exp();
+t1 = new ASTAnd(t1,t2);
+        break;
+        }
+      case OR:{
+        jj_consume_token(OR);
+        t2 = Exp();
+t1 = new ASTOr(t1,t2);
         break;
         }
       default:
@@ -422,10 +436,10 @@ t = new ASTDef(vars, t2);
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x40000000,0x4000001,0x12c1390,0x30000000,0x30000000,0x300000,0x300000,0xc00000,0xc00000,0x88000000,0x88000000,0x400,0x40000,0x12c1310,};
+	   jj_la1_0 = new int[] {0x0,0x10000001,0x42c1390,0xc0000000,0xc0000000,0x300000,0x300000,0x2400000,0x2400000,0x21800000,0x21800000,0x400,0x40000,0x42c1310,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x7,0x7,0x0,0x0,0x0,};
+	   jj_la1_1 = new int[] {0x1,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x1e,0x1e,0x0,0x0,0x0,};
 	}
 
   /** Constructor with InputStream. */
@@ -571,7 +585,7 @@ t = new ASTDef(vars, t2);
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[36];
+	 boolean[] la1tokens = new boolean[38];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -588,7 +602,7 @@ t = new ASTDef(vars, t2);
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 36; i++) {
+	 for (int i = 0; i < 38; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;

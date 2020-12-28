@@ -6,6 +6,7 @@ public class CodeBlock {
     StringBuffer code;
     private int LOCAL_LIMIT = 4;
     private int STACK_LIMIT = 256;
+    private int numLabels = 0;
 
     public CodeBlock() {
         code = new StringBuffer();
@@ -74,5 +75,11 @@ public class CodeBlock {
         initial.append(String.format("\t.limit stack %d\n\n", stack));
         initial.append("getstatic java/lang/System/out Ljava/io/PrintStream;\n");
         return initial;
+    }
+
+    public int genLabels(int n){
+        int curr = numLabels;
+        numLabels += n;
+        return curr;
     }
 }

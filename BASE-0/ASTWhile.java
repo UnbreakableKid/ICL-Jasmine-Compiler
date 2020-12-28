@@ -10,6 +10,17 @@ public class ASTWhile implements ASTNode {
 
     public void compile(CodeBlock c, Environment e) {
 
+        int labels = c.genLabels(2);
+
+        String start = "L" + labels;
+        String end = "L" + labels+1;
+
+        c.emit(start + ":");
+        lhs.compile(c,e);
+        c.emit("ifeq " + end);
+        c.emit("pop");
+        c.emit("goto " + start);
+        c.emit(end + ":");
     }
     public IValue eval(Environment env) {
 

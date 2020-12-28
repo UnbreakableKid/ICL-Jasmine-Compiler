@@ -134,6 +134,12 @@ TOKEN :
   < MINUS : "-">
   |
   < TIMES : "*">
+
+  |
+    < OR : "||" >
+  |
+    < AND : "&&" >
+
   |
   < DIV : "/">
   |
@@ -192,7 +198,7 @@ ASTNode EA():
   ASTNode t1, t2;
 }
 {
-   t1=Term() ( ( op=<PLUS> | op=<MINUS> ) t2=Term()
+   t1=Term() ( ( op=<PLUS> | op=<MINUS>) t2=Term()
                   { if (op.kind == PLUS)
                          t1 = new ASTPlus(t1,t2);
                     else
@@ -233,6 +239,8 @@ ASTNode Comp() :
    |<BT> t2 = Exp() { t1 = new ASTBigger(t1,t2); }
    |<LEQ> t2 = Exp() { t1 = new ASTLessOrEqual(t1,t2); }
    |<BEQ> t2 = Exp() { t1 = new ASTBiggerOrEqual(t1,t2); }
+   |<AND>  t2 = Exp() { t1 = new ASTAnd(t1,t2); }
+   |<OR> t2 = Exp() { t1 = new ASTOr(t1,t2); }
   )?
   {
     return t1;
