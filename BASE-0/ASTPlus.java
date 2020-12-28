@@ -14,9 +14,7 @@ public class ASTPlus implements ASTNode {
         c.emit(BYTECODE);
     }
 
-//    public int eval(Environment e) {
-//        return lhs.eval(e) + rhs.eval(e);
-//    }
+
 
     public IValue eval(Environment env) {
         IValue v1 = lhs.eval(env);

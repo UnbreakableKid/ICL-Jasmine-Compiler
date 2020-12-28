@@ -75,7 +75,8 @@ public class Parser {
                     System.out.println("Shutting down...");
                     System.exit(1);
                 }
-                System.out.println(exp.eval(env));
+                VInt x = (VInt) exp.eval(env);
+                System.out.println(x.getval());
             } catch(Exception e){
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
@@ -119,7 +120,10 @@ TOKEN :
   <PRINT: "print">
   |
   <PRINTLN: "println">
-
+  |
+   <BOOL : "true" | "false">
+  |
+  <DEREF : "!">
   |
   < Id: ["a"-"z","A"-"Z"] ( ["a"-"z","A"-"Z","0"-"9"] )* >
   |
@@ -145,25 +149,40 @@ TOKEN :
   |
   <ASSIGN: ":=">
 
+  |
+
+  <SEMICOLON: ";" >
+|
+  < LEQ : "<=" >
+|
+  < BEQ: ">=" >
+|
+  < LT : "<" >
+|
+  < BT : ">" >
+|
+  < COLON : ":" >
+
 }
 
 ASTNode Start():
-{ ASTNode t;}
+{ ASTNode t, t1;}
 {
 
-<EXIT> {return null;}
-|
-   t = Exp()  (<EOF> | <EL>)
+    <EXIT> {return null;}
+    |
+
+    t = Exp() (<SEMICOLON> t1 = Exp() {t = new ASTSeq(t, t1);})* (<EOF> | <EL>)
+
     { return t; }
-
-
 }
+
 
 ASTNode Exp() :
 { Token op;
   ASTNode t1, t2; }
 {
-     t1=EA() (<EQUALS> t2 = EA() | <ASSIGN> t2 = EA() )?
+     t1=EA() (<EQUALS> t2 = EA() {t1 = new ASTEq(t1, t2);}| <ASSIGN> t2 = EA() {t1 = new ASTAssign(t1, t2);})?
 
      {return t1;}
 }
@@ -202,9 +221,27 @@ ASTNode Term() :
      { return t1; } 
 }
 
+ASTNode Comp() :
+{
+  ASTNode t1, t2;
+}
+{
+  t1 = Exp()
+  (
+    <EQ> t2 = Exp() { t1 = new ASTEq(t1,t2); }
+   |<LT> t2 = Exp() { t1 = new ASTLess(t1,t2); }
+   |<BT> t2 = Exp() { t1 = new ASTBigger(t1,t2); }
+   |<LEQ> t2 = Exp() { t1 = new ASTLessOrEqual(t1,t2); }
+   |<BEQ> t2 = Exp() { t1 = new ASTBiggerOrEqual(t1,t2); }
+  )?
+  {
+    return t1;
+  }
+}
+
 ASTNode Fact() :{
   Token n, m;
-  ASTNode t, t1, t2;
+  ASTNode t, t1, t2 = null;
   Map<String, ASTNode> vars = new HashMap<>();
 }
     {
@@ -218,12 +255,36 @@ ASTNode Fact() :{
 
         }
 
+
         | n=<Num> {
                 VInt z = new VInt(Integer.parseInt(n.image));
                 t = new ASTNum(z);        }
+
+
         | n=<Id> {
 
           t = new ASTId(n.image);
+        }
+        |
+
+        <IF> t = Comp() <THEN> t1 = Exp() (<ELSE> t2=Exp())? <End>
+        {
+        if(t2 != null)
+            t = new ASTIf(t,t1,t2);
+        else t = new ASTIf(t,t1,null);}
+
+        |
+
+        <WHILE> t1 = Comp() <DO> t2 = Exp() <End>{
+
+            t = new ASTWhile(t1, t2);
+
+        }
+        |
+
+        <NEW> t1 = Fact() {
+
+            t = new ASTNew(t1);
         }
 
         |
