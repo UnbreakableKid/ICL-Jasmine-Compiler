@@ -10,7 +10,7 @@ public class ASTId implements ASTNode {
 
     public IValue eval(Environment e) {
 
-        return (VInt) e.find(id);
+        return (VRef) e.find(id);
     }
 
     @Override
