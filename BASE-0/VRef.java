@@ -2,17 +2,16 @@ public class VRef implements IValue {
 
     IValue v;
 
-    VRef(IValue v0) {
-        v = v0;
+    VRef(IValue v) {
+        this.v = v;
     }
 
     IValue get() {
         return v;
     }
 
-    void set(IValue v0) {
-        v = v0;
-
+    void set(IValue nv) {
+        v = nv;
     }
 
     @Override

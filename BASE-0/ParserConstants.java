@@ -76,6 +76,8 @@ public interface ParserConstants {
   int BT = 36;
   /** RegularExpression Id. */
   int COLON = 37;
+  /** RegularExpression Id. */
+  int FINAL = 38;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -120,6 +122,7 @@ public interface ParserConstants {
     "\"<\"",
     "\">\"",
     "\":\"",
+    "\";;\"",
   };
 
 }

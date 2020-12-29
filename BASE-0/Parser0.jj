@@ -67,6 +67,7 @@ public class Parser {
   private static void interpreter(Parser parser){
         Environment<Integer> env = new Environment<>();
         ASTNode exp;
+        System.out.println("Interpreter:\n");
         while(true){
             try{
                 exp = parser.Start();
@@ -168,7 +169,8 @@ TOKEN :
   < BT : ">" >
 |
   < COLON : ":" >
-
+|
+  < FINAL: ";;">
 }
 
 ASTNode Start():
@@ -178,7 +180,7 @@ ASTNode Start():
     <EXIT> {return null;}
     |
 
-    t = Exp() (<SEMICOLON> t1 = Exp() {t = new ASTSeq(t, t1);})* (<EOF> | <EL>)
+    t = Exp()  (<SEMICOLON> t1 = Exp() {t = new ASTSeq(t, t1);})* (<FINAL>)* (<EOF> | <EL>)
 
     { return t; }
 }
@@ -289,18 +291,20 @@ ASTNode Fact() :{
 
         }
         |
-
         <NEW> t1 = Fact() {
 
-            t = new ASTNew(t1);
+            t = new ASTRef(t1);
         }
+        |
+        <DEREF> t1 = Fact() {
 
+            t = new ASTDeref(t1);
+        }
         |
          <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Exp() <End> {
 
           t = new ASTDef(vars, t2);
         }
-
         | <LPAR> t=Exp() <RPAR> )
         { return t; }
 
