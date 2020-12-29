@@ -70,6 +70,8 @@ public class Parser {
         System.out.println("Interpreter:\n");
         while(true){
             try{
+                System.out.print("> ");
+
                 exp = parser.Start();
 
                 if(exp == null){
@@ -252,7 +254,7 @@ ASTNode Comp() :
 
 ASTNode Fact() :{
   Token n, m;
-  ASTNode t, t1, t2 = null;
+  ASTNode t, t1, t2;
   Map<String, ASTNode> vars = new HashMap<>();
 }
     {
@@ -276,27 +278,22 @@ ASTNode Fact() :{
 
           t = new ASTId(n.image);
         }
+
+        |n=<BOOL> {t = new ASTBool(Boolean.parseBoolean(n.image));}
+
+        |<NOT> t1=Fact() { t = new ASTNot(t1);}
+
         |
-        n=<BOOL> {t1 = new ASTBool(n);}
-        |
-        <NOT> t1=Fact() { t1=new ASTNot(t1);}
-        |
-        <IF> t = Comp() <THEN> t1 = Exp() (<ELSE> t2=Exp())? <End>
+        <IF> t = Comp() <THEN> t1 = Exp() <ELSE> t2=Exp() <End>
         {
-        if(t2 != null)
-            t = new ASTIf(t,t1,t2);
-        else t = new ASTIf(t,t1,null);}
-
+         t = new ASTIf(t,t1,t2);
+        }
         |
-
         <WHILE> t1 = Comp() <DO> t2 = Exp() <End>{
-
             t = new ASTWhile(t1, t2);
-
         }
         |
         <NEW> t1 = Fact() {
-
             t = new ASTRef(t1);
         }
         |
