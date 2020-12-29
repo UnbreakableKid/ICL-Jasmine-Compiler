@@ -12,7 +12,7 @@ public class ASTAnd implements ASTNode {
 		IValue v1 = e1.eval(env);
 		IValue v2 = e2.eval(env);
 		
-		return new VBool(((VBool)v1).getval()&&((VBool)v2).getval());
+		return new VBool(((VBool)v1).getVal()&&((VBool)v2).getVal());
 	}
 
 	@Override

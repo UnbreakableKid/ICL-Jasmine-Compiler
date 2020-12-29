@@ -18,7 +18,7 @@ public class ASTEq implements ASTNode {
         }
 
         if (v1 instanceof VBool && v2 instanceof VBool){
-            return new VBool(((VBool) v1).getval() == ((VBool) v2).getval());
+            return new VBool(((VBool) v1).getVal() == ((VBool) v2).getVal());
         }
         return new VBool(false);
     }

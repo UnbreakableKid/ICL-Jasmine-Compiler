@@ -140,7 +140,8 @@ TOKEN :
     < OR : "||" >
   |
     < AND : "&&" >
-
+  |
+    < NOT: "~">
   |
   < DIV : "/">
   |
@@ -276,7 +277,10 @@ ASTNode Fact() :{
           t = new ASTId(n.image);
         }
         |
-
+        n=<BOOL> {t1 = new ASTBool(n);}
+        |
+        <NOT> t1=Fact() { t1=new ASTNot(t1);}
+        |
         <IF> t = Comp() <THEN> t1 = Exp() (<ELSE> t2=Exp())? <End>
         {
         if(t2 != null)

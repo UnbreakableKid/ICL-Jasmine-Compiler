@@ -25,10 +25,10 @@ public class ASTWhile implements ASTNode {
     public IValue eval(Environment env) {
 
         IValue finalexp = null;
-        Boolean condition = ((VBool) lhs.eval(env)).getval();
+        Boolean condition = ((VBool) lhs.eval(env)).getVal();
         while (condition) {
             finalexp = rhs.eval(env);
-            condition = ((VBool) lhs.eval(env)).getval();
+            condition = ((VBool) lhs.eval(env)).getVal();
         }
 
         return finalexp;

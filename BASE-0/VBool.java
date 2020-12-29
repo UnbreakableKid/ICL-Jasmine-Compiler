@@ -6,7 +6,7 @@ public class VBool implements IValue {
         v = v0;
     }
 
-    Boolean getval() {
+    Boolean getVal() {
         return v;
     }
 

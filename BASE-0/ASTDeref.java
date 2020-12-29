@@ -15,7 +15,7 @@ public class ASTDeref implements ASTNode {
         if(v1 instanceof VRef)
             return ((VRef) v1).get();
         else
-            throw new TypeError(String.format("TypeError: %s is not a reference!", v1.getClass().getName()));
+            throw new TypeError(String.format("TypeError: [%s] is not a reference!", v1.getClass().getName()));
     }
 
     @Override

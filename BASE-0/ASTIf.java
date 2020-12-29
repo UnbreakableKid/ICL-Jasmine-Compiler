@@ -12,7 +12,7 @@ public class ASTIf implements ASTNode {
     @Override
     public IValue eval(Environment env) {
 
-        if ( ((VBool) condition.eval(env)).getval())
+        if ( ((VBool) condition.eval(env)).getVal())
             return body.eval(env);
         else
             if(elsebody != null)
