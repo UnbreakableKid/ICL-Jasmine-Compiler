@@ -1,6 +1,6 @@
 interface IValue {
 
-    //String toString();
+    String stringify();
 
     //IValue eval(Environment e);
 

@@ -10,4 +10,9 @@ public class VInt implements IValue {
         return v;
     }
 
+    @Override
+    public String stringify(){
+        return String.valueOf(v);
+    }
+
 }

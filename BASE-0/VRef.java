@@ -14,4 +14,8 @@ public class VRef implements IValue {
         v = nv;
     }
 
+    @Override
+    public String stringify(){
+        return String.valueOf(v.toString());
+    }
 }

@@ -1,4 +1,4 @@
-public class ASTPrint implements ASTNode {
+public class ASTPrintln implements ASTNode {
 
     private static final String BYTECODE_1 ="getstatic java/lang/System/out Ljava/io/PrintStream;";
     private static final String BYTECODE_2 ="invokestatic java/lang/String/valueOf(I)Ljava/lang/String;";
@@ -6,13 +6,17 @@ public class ASTPrint implements ASTNode {
 
     ASTNode content;
 
-    public ASTPrint(ASTNode v) {
+    public ASTPrintln(ASTNode v) {
         content = v;
     }
 
     public IValue eval(Environment<IValue> env) {
-        IValue v = content.eval(env);
-        System.out.print(v.stringify());
+        IValue v = null;
+        if(content!=null) {
+            v = content.eval(env);
+            System.out.println(v.stringify());
+        }
+        else System.out.println();
         return v;
     }
 
