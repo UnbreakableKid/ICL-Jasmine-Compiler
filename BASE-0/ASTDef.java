@@ -14,10 +14,10 @@ class ASTDef implements ASTNode {
         this.body = r;
     }
 
-    public IValue eval(Environment env) {
+    public IValue eval(Environment<IValue> env) {
 
         IValue val;
-        Environment new_e = env.beginScope();
+        Environment<IValue> new_e = env.beginScope();
 
         for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
             val = var.getValue().eval(new_e);

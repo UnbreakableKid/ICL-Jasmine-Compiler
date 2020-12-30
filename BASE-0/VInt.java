@@ -6,12 +6,8 @@ public class VInt implements IValue {
         v = v0;
     }
 
-    int getval() {
+    int getVal() {
         return v;
     }
 
-    @Override
-    public IValue eval(Environment e) {
-        return null;
-    }
 }

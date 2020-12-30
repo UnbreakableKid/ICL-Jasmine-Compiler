@@ -1,3 +1,5 @@
+import Exceptions.TypeError;
+
 public class ASTIf implements ASTNode {
 
     public static final String BYTECODE = "imul";
@@ -10,14 +12,13 @@ public class ASTIf implements ASTNode {
     }
 
     @Override
-    public IValue eval(Environment env) {
+    public IValue eval(Environment<IValue> env) {
 
         if ( ((VBool) condition.eval(env)).getVal())
             return body.eval(env);
-        else
-            if(elsebody != null)
-                return elsebody.eval(env);
-            else return null;
+        else if(elsebody != null)
+            return elsebody.eval(env);
+        return null;
     }
     @Override
     public void compile(CodeBlock c, Environment e) {

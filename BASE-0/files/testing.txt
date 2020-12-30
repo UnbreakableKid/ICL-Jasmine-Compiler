@@ -1,0 +1,19 @@
+######
+(new 3) := 6;;
+###
+def	a =	new	5 in a := !a + 1; !a end;;
+###
+def	a =	5 in a + a end;;
+###
+def	a =	new	5 in !a + !a end;;
+###
+def	a =	new	5 in a := !a + 1 end;;
+###
+def	a =	5 in !a end;; //TypeError!! a is not a reference!
+###
+###
+def	m =	new 10 in while !m>1 do if !m%2 == 0 then m := !m/2 else m := 3*!m+1 end end end;;
+###
+###
+def	x =	new	10 s = new 0 in while !x > 0 do s := !s+!x; x := !x–1 end; print !s; println end;;
+######

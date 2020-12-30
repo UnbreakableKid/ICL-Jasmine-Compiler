@@ -1,3 +1,5 @@
+import Exceptions.TypeError;
+
 public class ASTOr implements ASTNode {
 
 	ASTNode e1, e2;
@@ -8,11 +10,13 @@ public class ASTOr implements ASTNode {
 	}
 
 	@Override
-	public IValue eval(Environment env)  {
+	public IValue eval(Environment<IValue> env)  {
 		IValue v1 = e1.eval(env);
 		IValue v2 = e2.eval(env);
-		
-		return new VBool(((VBool)v1).getVal()||((VBool)v2).getVal());
+		if (v1 instanceof VBool && v2 instanceof VBool){
+			return new VBool(((VBool)v1).getVal()||((VBool)v2).getVal());
+		}
+		throw new TypeError("TypeError: Illegal arguments with relational operators...");
 	}
 
 	@Override

@@ -1,15 +1,15 @@
 public class ASTRef implements ASTNode {
 
     public static final String BYTECODE = "sipush ";
-    ASTNode value;
+    ASTNode ref;
 
     public ASTRef(ASTNode v) {
-        value = v;
+        ref = v;
     }
 
     @Override
-    public IValue eval(Environment env) {
-        return new VRef(value.eval(env));
+    public IValue eval(Environment<IValue> env) {
+        return new VRef(ref.eval(env));
     }
 
     @Override

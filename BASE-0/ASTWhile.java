@@ -1,3 +1,5 @@
+import Exceptions.TypeError;
+
 public class ASTWhile implements ASTNode {
 
     private static final String BYTECODE = "iadd";
@@ -6,6 +8,20 @@ public class ASTWhile implements ASTNode {
     public ASTWhile(ASTNode condition, ASTNode body) {
         lhs = condition;
         rhs = body;
+    }
+
+    public IValue eval(Environment<IValue> env) {
+
+        IValue condVal = lhs.eval(env);
+        if(!(condVal instanceof VBool))
+            throw new TypeError("TypeError: Illegal arguments with relational operators...");
+
+        IValue finalexp = null;
+        while (((VBool) condVal).getVal()) {
+            finalexp = rhs.eval(env);
+            condVal = lhs.eval(env);
+        }
+        return finalexp;
     }
 
     public void compile(CodeBlock c, Environment e) {
@@ -22,15 +38,5 @@ public class ASTWhile implements ASTNode {
         c.emit("goto " + start);
         c.emit(end + ":");
     }
-    public IValue eval(Environment env) {
 
-        IValue finalexp = null;
-        Boolean condition = ((VBool) lhs.eval(env)).getVal();
-        while (condition) {
-            finalexp = rhs.eval(env);
-            condition = ((VBool) lhs.eval(env)).getVal();
-        }
-
-        return finalexp;
-    }
 }

@@ -9,12 +9,12 @@ public class ASTMul implements ASTNode {
     }
 
     @Override
-    public IValue eval(Environment env) {
+    public IValue eval(Environment<IValue> env) {
         IValue v1 = lhs.eval(env);
         if (v1 instanceof VInt) {
             IValue v2 = rhs.eval(env);
             if (v2 instanceof VInt) {
-                return new VInt(((VInt) v1).getval() * ((VInt) v2).getval());
+                return new VInt(((VInt) v1).getVal() * ((VInt) v2).getVal());
             }
             throw new Error(" +:argument is not an integer");
         }

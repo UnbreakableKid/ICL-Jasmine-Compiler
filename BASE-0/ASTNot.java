@@ -10,7 +10,7 @@ public class ASTNot implements ASTNode{
     }
 
     @Override
-    public IValue eval(Environment env) {
+    public IValue eval(Environment<IValue> env) {
         IValue val = v.eval(env);
         if (val instanceof VBool) {
             return new VBool(!((VBool) val).getVal());

@@ -65,9 +65,9 @@ public class Parser implements ParserConstants {
   }
 
   private static void interpreter(Parser parser){
-        Environment<Integer> env = new Environment<>();
+        Environment env = new Environment<IValue>();
         ASTNode exp;
-        System.out.println("Interpreter:\n");
+        System.out.println("\nInterpreter: ");
         while(true){
             try{
                 System.out.print("> ");
@@ -78,8 +78,8 @@ public class Parser implements ParserConstants {
                     System.out.println("Shutting down...");
                     System.exit(1);
                 }
-                VInt x = (VInt) exp.eval(env);
-                System.out.println(x.getval());
+                IValue x = exp.eval(env);
+                System.out.println(x);
             } catch(Exception e){
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
@@ -348,13 +348,13 @@ t1 = new ASTOr(t1,t2);
       n = jj_consume_token(Num);
 VInt z = new VInt(Integer.parseInt(n.image));
                 z.v = -z.v;
-                t = new ASTNum(z);
+                t = new ASTNum(z.getVal());
       break;
       }
     case Num:{
       n = jj_consume_token(Num);
 VInt z = new VInt(Integer.parseInt(n.image));
-                t = new ASTNum(z);
+                t = new ASTNum(z.getVal());
       break;
       }
     case Id:{

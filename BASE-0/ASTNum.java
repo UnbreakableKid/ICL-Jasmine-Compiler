@@ -1,20 +1,19 @@
 public class ASTNum implements ASTNode {
 
     public static final String BYTECODE = "sipush ";
-    IValue val;
+    int val;
 
-    public ASTNum(IValue n) {
+    public ASTNum(int n) {
         val = n;
     }
 
     @Override
-    public IValue eval(Environment e) {
-        return ((VInt) val);
+    public IValue eval(Environment<IValue> e) {
+        return new VInt( val);
     }
 
     @Override
     public void compile(CodeBlock c, Environment e) {
         c.emit(BYTECODE + val);
-
     }
 }

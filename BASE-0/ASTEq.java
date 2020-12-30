@@ -1,3 +1,5 @@
+import Exceptions.TypeError;
+
 public class ASTEq implements ASTNode {
 
     public static final String BYTECODE = "imul";
@@ -9,18 +11,17 @@ public class ASTEq implements ASTNode {
     }
 
     @Override
-    public IValue eval(Environment env) {
+    public IValue eval(Environment<IValue> env) {
         IValue v1 = lhs.eval(env);
         IValue v2 = rhs.eval(env);
 
         if (v1 instanceof VInt && v2 instanceof VInt){
-            return new VBool(((VInt) v1).getval() == ((VInt) v2).getval());
+            return new VBool(((VInt) v1).getVal() == ((VInt) v2).getVal());
         }
-
         if (v1 instanceof VBool && v2 instanceof VBool){
             return new VBool(((VBool) v1).getVal() == ((VBool) v2).getVal());
         }
-        return new VBool(false);
+        throw new TypeError("TypeError: Illegal arguments with relational operators...");
     }
     @Override
     public void compile(CodeBlock c, Environment e) {

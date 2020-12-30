@@ -1,7 +1,8 @@
 interface IValue {
-    String toString();
 
-    IValue eval(Environment e);
+    //String toString();
+
+    //IValue eval(Environment e);
 
     // IValue constructors
 

@@ -2,7 +2,7 @@ public class VBool implements IValue {
 
     Boolean v;
 
-    VBool(Boolean v0) {
+    public VBool(Boolean v0) {
         v = v0;
     }
 
@@ -10,8 +10,4 @@ public class VBool implements IValue {
         return v;
     }
 
-    @Override
-    public IValue eval(Environment e) {
-        return null;
-    }
 }

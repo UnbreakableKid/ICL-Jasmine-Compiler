@@ -21,7 +21,7 @@ public class ASTPrint implements ASTNode {
         if (v1 instanceof VInt) {
             IValue v2 = rhs.eval(env);
             if (v2 instanceof VInt) {
-                return new VInt(((VInt) v1).getval() + ((VInt) v2).getval());
+                return new VInt(((VInt) v1).getVal() + ((VInt) v2).getVal());
             }
             throw new Error(" +:argument is not an integer");
         }

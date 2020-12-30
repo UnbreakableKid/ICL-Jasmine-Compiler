@@ -14,8 +14,4 @@ public class VRef implements IValue {
         v = nv;
     }
 
-    @Override
-    public IValue eval(Environment e) {
-        return null;
-    }
 }

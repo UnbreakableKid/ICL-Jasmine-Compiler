@@ -8,7 +8,7 @@ public class ASTBool implements ASTNode{
     }
 
     @Override
-    public IValue eval(Environment env) {
+    public IValue eval(Environment<IValue> env) {
         return new VBool(bool);
     }
 
