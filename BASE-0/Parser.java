@@ -250,6 +250,7 @@ if (op.kind == PLUS)
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case TIMES:
+      case REST:
       case DIV:{
         ;
         break;
@@ -267,6 +268,10 @@ if (op.kind == PLUS)
         op = jj_consume_token(DIV);
         break;
         }
+      case REST:{
+        op = jj_consume_token(REST);
+        break;
+        }
       default:
         jj_la1[9] = jj_gen;
         jj_consume_token(-1);
@@ -275,8 +280,9 @@ if (op.kind == PLUS)
       t2 = Fact();
 if (op.kind == TIMES)
                   t1 = new ASTMul(t1,t2);
-              else
+              else if(op.kind == DIV)
                   t1 = new ASTDiv(t1,t2);
+              else t1 = new ASTRest(t1,t2);
     }
 {if ("" != null) return t1;}
     throw new Error("Missing return statement in function");
@@ -473,10 +479,10 @@ t = new ASTDef(vars, t2);
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x20000001,0xa2f1390,0x0,0x0,0x80000000,0x80000000,0x300000,0x300000,0x4400000,0x4400000,0x41800000,0x41800000,0x40000,0xa2f1310,};
+	   jj_la1_0 = new int[] {0x40000001,0x142f1390,0x0,0x0,0x0,0x0,0x300000,0x300000,0xa400000,0xa400000,0x81800000,0x81800000,0x40000,0x142f1310,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x0,0x0,0x2,0x80,0x1,0x1,0x0,0x0,0x0,0x0,0x3c,0x3c,0x0,0x0,};
+	   jj_la1_1 = new int[] {0x0,0x0,0x4,0x100,0x3,0x3,0x0,0x0,0x0,0x0,0x78,0x78,0x0,0x0,};
 	}
 
   /** Constructor with InputStream. */
@@ -622,7 +628,7 @@ t = new ASTDef(vars, t2);
   /** Generate ParseException. */
   static public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[40];
+	 boolean[] la1tokens = new boolean[41];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -639,7 +645,7 @@ t = new ASTDef(vars, t2);
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 40; i++) {
+	 for (int i = 0; i < 41; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;

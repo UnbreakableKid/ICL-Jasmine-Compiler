@@ -146,7 +146,9 @@ TOKEN :
   |
     < OR : "||" >
   |
-    < AND : "&&" >
+  < AND : "&&" >
+  |
+  < REST : "%" >
   |
     < NOT: "~">
   |
@@ -233,12 +235,13 @@ ASTNode Term() :
  ASTNode t1, t2;
 }
 {
-     t1 = Fact() ( ( op=<TIMES> | op=<DIV> ) t2 = Fact()
+     t1 = Fact() ( ( op=<TIMES> | op=<DIV> | op = <REST> ) t2 = Fact()
  		 {
               if (op.kind == TIMES)
                   t1 = new ASTMul(t1,t2);
-              else
+              else if(op.kind == DIV)
                   t1 = new ASTDiv(t1,t2);
+              else t1 = new ASTRest(t1,t2);
          }
 		)*
 
