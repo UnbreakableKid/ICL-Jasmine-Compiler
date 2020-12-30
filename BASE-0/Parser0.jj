@@ -78,8 +78,8 @@ public class Parser {
                     System.out.println("Shutting down...");
                     System.exit(1);
                 }
-                IValue x = exp.eval(env);
-                System.out.println(x);
+                    VInt x = (VInt) exp.eval(env);
+                                System.out.println(x.getVal());
             } catch(Exception e){
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
