@@ -78,13 +78,13 @@ public class Parser {
                     System.out.println("Shutting down...");
                     System.exit(1);
                 }
-                       try {
-                                        VInt x = (VInt) exp.eval(env);
+                   try {
+                    VInt x = (VInt) exp.eval(env);
 
-                                        System.out.println(x.getVal());
-                                    }catch (Exception e){
-                                        System.out.println(e);
-                                    }
+                    System.out.println(x.getVal());
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
             } catch(Exception e){
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
@@ -188,7 +188,16 @@ ASTNode Start():
     <EXIT> {return null;}
     |
 
-    t = Exp()  (<SEMICOLON> t1 = Exp() {t = new ASTSeq(t, t1);})* (<FINAL>)* (<EOF> | <EL>)
+    t = Seq() (<EOF> | <EL>)
+
+    { return t; }
+}
+
+ASTNode Seq():
+{ ASTNode t, t1;}
+{
+
+    t = Exp()  (<SEMICOLON> t1 = Exp() {t = new ASTSeq(t, t1);})* (<FINAL>)*
 
     { return t; }
 }
@@ -307,7 +316,7 @@ ASTNode Fact() :{
             t = new ASTDeref(t1);
         }
         |
-         <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Exp() <End> {
+         <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Seq() <End> {
 
           t = new ASTDef(vars, t2);
         }

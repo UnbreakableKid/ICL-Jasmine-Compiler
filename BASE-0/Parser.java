@@ -78,13 +78,13 @@ public class Parser implements ParserConstants {
                     System.out.println("Shutting down...");
                     System.exit(1);
                 }
-                       try {
-                                        VInt x = (VInt) exp.eval(env);
+                   try {
+                    VInt x = (VInt) exp.eval(env);
 
-                                        System.out.println(x.getVal());
-                                    }catch (Exception e){
-                                        System.out.println(e);
-                                    }
+                    System.out.println(x.getVal());
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
             } catch(Exception e){
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
@@ -110,35 +110,7 @@ public class Parser implements ParserConstants {
     case MINUS:
     case NOT:
     case LPAR:{
-      t = Exp();
-      label_1:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case SEMICOLON:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[0] = jj_gen;
-          break label_1;
-        }
-        jj_consume_token(SEMICOLON);
-        t1 = Exp();
-t = new ASTSeq(t, t1);
-      }
-      label_2:
-      while (true) {
-        switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case FINAL:{
-          ;
-          break;
-          }
-        default:
-          jj_la1[1] = jj_gen;
-          break label_2;
-        }
-        jj_consume_token(FINAL);
-      }
+      t = Seq();
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
       case 0:{
         jj_consume_token(0);
@@ -149,7 +121,7 @@ t = new ASTSeq(t, t1);
         break;
         }
       default:
-        jj_la1[2] = jj_gen;
+        jj_la1[0] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -157,10 +129,44 @@ t = new ASTSeq(t, t1);
       break;
       }
     default:
-      jj_la1[3] = jj_gen;
+      jj_la1[1] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
+    throw new Error("Missing return statement in function");
+}
+
+  static final public ASTNode Seq() throws ParseException {ASTNode t, t1;
+    t = Exp();
+    label_1:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case SEMICOLON:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[2] = jj_gen;
+        break label_1;
+      }
+      jj_consume_token(SEMICOLON);
+      t1 = Exp();
+t = new ASTSeq(t, t1);
+    }
+    label_2:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case FINAL:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[3] = jj_gen;
+        break label_2;
+      }
+      jj_consume_token(FINAL);
+    }
+{if ("" != null) return t;}
     throw new Error("Missing return statement in function");
 }
 
@@ -429,7 +435,7 @@ vars.put(n.image, t1);
         }
       }
       jj_consume_token(In);
-      t2 = Exp();
+      t2 = Seq();
       jj_consume_token(End);
 t = new ASTDef(vars, t2);
       break;
@@ -467,10 +473,10 @@ t = new ASTDef(vars, t2);
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x0,0x0,0x20000001,0xa2f1390,0x80000000,0x80000000,0x300000,0x300000,0x4400000,0x4400000,0x41800000,0x41800000,0x40000,0xa2f1310,};
+	   jj_la1_0 = new int[] {0x20000001,0xa2f1390,0x0,0x0,0x80000000,0x80000000,0x300000,0x300000,0x4400000,0x4400000,0x41800000,0x41800000,0x40000,0xa2f1310,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x2,0x80,0x0,0x0,0x1,0x1,0x0,0x0,0x0,0x0,0x3c,0x3c,0x0,0x0,};
+	   jj_la1_1 = new int[] {0x0,0x0,0x2,0x80,0x1,0x1,0x0,0x0,0x0,0x0,0x3c,0x3c,0x0,0x0,};
 	}
 
   /** Constructor with InputStream. */
