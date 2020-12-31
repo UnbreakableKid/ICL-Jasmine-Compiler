@@ -16,7 +16,7 @@ public class ASTPrintln implements ASTNode {
             v = content.eval(env);
             System.out.println(v.stringify());
         }
-        else System.out.println();
+        else System.out.println(" ");
         return v;
     }
 
