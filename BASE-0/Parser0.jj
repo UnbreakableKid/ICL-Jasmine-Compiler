@@ -80,8 +80,7 @@ public class Parser {
                 }
                    try {
                     VInt x = (VInt) exp.eval(env);
-
-//                    System.out.println(x.getVal());
+                    System.out.println(x.getVal());
                     }catch (Exception e){
                         System.out.println(e);
                     }
@@ -271,7 +270,7 @@ ASTNode Comp() :
 
 ASTNode Fact() :{
   Token n, m;
-  ASTNode t, t1, t2;
+  ASTNode t, t1, t2, elset = null;
   Map<String, ASTNode> vars = new HashMap<>();
 }
     {
@@ -301,9 +300,9 @@ ASTNode Fact() :{
         |<NOT> t1=Fact() { t = new ASTNot(t1);}
 
         |
-        <IF> t = Comp() <THEN> t1 = Seq() <ELSE> t2=Seq() <End>
-        {
-         t = new ASTIf(t,t1,t2);
+        <IF> t = Comp() <THEN> t1 = Seq() (<ELSE> t2=Seq() {elset = t2;} )? <End>
+        {         t = new ASTIf(t,t1,elset);
+
         }
         |
         <WHILE> t1 = Comp() <DO> t2 = Seq() <End>{
@@ -319,7 +318,9 @@ ASTNode Fact() :{
             t = new ASTDeref(t1);
         }
 
-        | <PRINTLN> (t1=EA() {t = new ASTPrintln(t1);})? {t = new ASTPrintln(null);}
+        | <PRINTLN> (t1=EA() {elset = t1;})?
+
+        {t = new ASTPrintln(elset);}
 
 
         | <PRINT> t1=EA() {t = new ASTPrint(t1);}
