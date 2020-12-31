@@ -301,12 +301,12 @@ ASTNode Fact() :{
         |<NOT> t1=Fact() { t = new ASTNot(t1);}
 
         |
-        <IF> t = Comp() <THEN> t1 = Exp() <ELSE> t2=Exp() <End>
+        <IF> t = Comp() <THEN> t1 = Seq() <ELSE> t2=Seq() <End>
         {
          t = new ASTIf(t,t1,t2);
         }
         |
-        <WHILE> t1 = Comp() <DO> t2 = Exp() <End>{
+        <WHILE> t1 = Comp() <DO> t2 = Seq() <End>{
             t = new ASTWhile(t1, t2);
         }
         |
@@ -318,13 +318,16 @@ ASTNode Fact() :{
 
             t = new ASTDeref(t1);
         }
+
         | <PRINTLN> t1=Exp() {t = new ASTPrintln(t1);}
         | <PRINT> t1=Exp() {t = new ASTPrint(t1);}
+
         |
          <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Seq() <End> {
 
           t = new ASTDef(vars, t2);
         }
         | <LPAR> t=Exp() <RPAR> )
+
         { return t; }
     }
