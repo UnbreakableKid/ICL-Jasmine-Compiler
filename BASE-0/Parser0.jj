@@ -271,7 +271,7 @@ ASTNode Comp() :
 
 ASTNode Fact() :{
   Token n, m;
-  ASTNode t, t1, t2;
+  ASTNode t, t1 = null, t2;
   Map<String, ASTNode> vars = new HashMap<>();
 }
     {
@@ -319,8 +319,13 @@ ASTNode Fact() :{
             t = new ASTDeref(t1);
         }
 
-        | <PRINTLN> t1=Exp() {t = new ASTPrintln(t1);}
-        | <PRINT> t1=Exp() {t = new ASTPrint(t1);}
+        | <PRINTLN> (t1=EA())? {
+
+            if(t1 != null)
+                t = new ASTPrintln(t1);
+                else t = new ASTPrintln(null);
+                }
+        | <PRINT> t1=EA() {t = new ASTPrint(t1);}
 
         |
          <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Seq() <End> {
