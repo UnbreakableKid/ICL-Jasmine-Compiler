@@ -81,7 +81,7 @@ public class Parser {
                    try {
                     VInt x = (VInt) exp.eval(env);
 
-                    System.out.println(x.getVal());
+//                    System.out.println(x.getVal());
                     }catch (Exception e){
                         System.out.println(e);
                     }
@@ -271,7 +271,7 @@ ASTNode Comp() :
 
 ASTNode Fact() :{
   Token n, m;
-  ASTNode t, t1 = null, t2;
+  ASTNode t, t1, t2;
   Map<String, ASTNode> vars = new HashMap<>();
 }
     {
@@ -319,12 +319,9 @@ ASTNode Fact() :{
             t = new ASTDeref(t1);
         }
 
-        | <PRINTLN> (t1=EA())? {
+        | <PRINTLN> (t1=EA() {t = new ASTPrintln(t1);})? {t = new ASTPrintln(null);}
 
-            if(t1 != null)
-                t = new ASTPrintln(t1);
-                else t = new ASTPrintln(null);
-                }
+
         | <PRINT> t1=EA() {t = new ASTPrint(t1);}
 
         |

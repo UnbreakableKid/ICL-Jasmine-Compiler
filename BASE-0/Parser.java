@@ -78,13 +78,13 @@ public class Parser implements ParserConstants {
                     System.out.println("Shutting down...");
                     System.exit(1);
                 }
-//                   try {
-//                    VInt x = (VInt) exp.eval(env);
-//
+                   try {
+                    VInt x = (VInt) exp.eval(env);
+
 //                    System.out.println(x.getVal());
-//                    }catch (Exception e){
-//                        System.out.println(e);
-//                    }
+                    }catch (Exception e){
+                        System.out.println(e);
+                    }
             } catch(Exception e){
                 System.out.println("Syntax Error!");
                 parser.ReInit(System.in);
@@ -359,7 +359,7 @@ t1 = new ASTOr(t1,t2);
 }
 
   static final public ASTNode Fact() throws ParseException {Token n, m;
-  ASTNode t, t1 = null, t2;
+  ASTNode t, t1, t2;
   Map<String, ASTNode> vars = new HashMap<>();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
     case MINUS:{
@@ -441,15 +441,14 @@ t = new ASTDeref(t1);
       case NOT:
       case LPAR:{
         t1 = EA();
+t = new ASTPrintln(t1);
         break;
         }
       default:
         jj_la1[12] = jj_gen;
         ;
       }
-if(t1 != null)
-                t = new ASTPrintln(t1);
-                else t = new ASTPrintln(null);
+t = new ASTPrintln(null);
       break;
       }
     case PRINT:{
