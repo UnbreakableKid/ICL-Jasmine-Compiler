@@ -80,6 +80,8 @@ public class Parser {
                 }
                    try {
                     VInt x = (VInt) exp.eval(env);
+                                        if(x != null)
+
                     System.out.println(x.getVal());
                     }catch (Exception e){
                         System.out.println(e);

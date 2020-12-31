@@ -80,6 +80,8 @@ public class Parser implements ParserConstants {
                 }
                    try {
                     VInt x = (VInt) exp.eval(env);
+                                        if(x != null)
+
                     System.out.println(x.getVal());
                     }catch (Exception e){
                         System.out.println(e);
@@ -449,14 +451,14 @@ t = new ASTDeref(t1);
       case NOT:
       case LPAR:{
         t1 = EA();
-t = new ASTPrintln(t1);
+elset = t1;
         break;
         }
       default:
         jj_la1[13] = jj_gen;
         ;
       }
-t = new ASTPrintln(null);
+t = new ASTPrintln(elset);
       break;
       }
     case PRINT:{
