@@ -78,9 +78,9 @@ public class Parser {
                     System.exit(1);
                 }
                    try {
-                    VInt x = (VInt) exp.eval(env);
+                    IValue x = exp.eval(env);
                     if(x != null)
-                        System.out.println(x.getVal());
+                        System.out.println(x.stringify());
                     }catch (Exception e){
                         System.out.println(e.getMessage());
                     }
