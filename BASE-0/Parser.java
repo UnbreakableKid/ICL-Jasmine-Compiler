@@ -103,6 +103,8 @@ public class Parser implements ParserConstants {
     case NEW:
     case IF:
     case WHILE:
+    case PRINT:
+    case PRINTLN:
     case BOOL:
     case DEREF:
     case Id:
@@ -422,6 +424,18 @@ t = new ASTRef(t1);
 t = new ASTDeref(t1);
       break;
       }
+    case PRINTLN:{
+      jj_consume_token(PRINTLN);
+      t1 = Exp();
+t = new ASTPrintln(t1);
+      break;
+      }
+    case PRINT:{
+      jj_consume_token(PRINT);
+      t1 = Exp();
+t = new ASTPrint(t1);
+      break;
+      }
     case Def:{
       jj_consume_token(Def);
       label_5:
@@ -479,7 +493,7 @@ t = new ASTDef(vars, t2);
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x40000001,0x142f1390,0x0,0x0,0x0,0x0,0x300000,0x300000,0xa400000,0xa400000,0x81800000,0x81800000,0x40000,0x142f1310,};
+	   jj_la1_0 = new int[] {0x40000001,0x142fd390,0x0,0x0,0x0,0x0,0x300000,0x300000,0xa400000,0xa400000,0x81800000,0x81800000,0x40000,0x142fd310,};
 	}
 	private static void jj_la1_init_1() {
 	   jj_la1_1 = new int[] {0x0,0x0,0x4,0x100,0x3,0x3,0x0,0x0,0x0,0x0,0x78,0x78,0x0,0x0,};

@@ -318,6 +318,8 @@ ASTNode Fact() :{
 
             t = new ASTDeref(t1);
         }
+        | <PRINTLN> t1=Exp() {t = new ASTPrintln(t1);}
+        | <PRINT> t1=Exp() {t = new ASTPrint(t1);}
         |
          <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Seq() <End> {
 
@@ -325,5 +327,4 @@ ASTNode Fact() :{
         }
         | <LPAR> t=Exp() <RPAR> )
         { return t; }
-
     }
