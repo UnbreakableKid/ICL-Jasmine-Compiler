@@ -24,15 +24,19 @@ public class ASTIf implements ASTNode {
     public void compile(CodeBlock c, Environment e) {
         int labels = c.genLabels(3);
 
-        String trueB = "L" + labels;
-        String elseB = "L" + labels+1;
+        String trueB = "L" + labels+1;
         String endB = "L" + labels+2;
 
         condition.compile(c,e);
-        body.compile(c,e);
-        c.emit("goto " + endB);
-        c.emit(elseB + ":");
+        c.emit("ifgt " + trueB);
+
         elsebody.compile(c,e);
+
+        c.emit("goto " + endB);
+        c.emit(trueB + ":");
+
+        body.compile(c,e);
+
         c.emit(endB + ":");
 
     }

@@ -2,6 +2,8 @@ import Exceptions.TypeError;
 
 public class ASTOr implements ASTNode {
 
+	private static final String BYTECODE = "ior";
+
 	ASTNode e1, e2;
 
 	public ASTOr(ASTNode e1, ASTNode e2) {
@@ -21,7 +23,9 @@ public class ASTOr implements ASTNode {
 
 	@Override
 	public void compile(CodeBlock c, Environment e) {
-
+		e1.compile(c, e);
+		e2.compile(c, e);
+		c.emit(BYTECODE);
 	}
 
 }

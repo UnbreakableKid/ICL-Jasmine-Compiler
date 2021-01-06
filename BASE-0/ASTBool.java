@@ -14,6 +14,11 @@ public class ASTBool implements ASTNode{
 
     @Override
     public void compile(CodeBlock c, Environment e) {
-        throw new NotImplementedException();
+
+        if (bool)
+            c.emit("sipush 1");
+        else
+            c.emit("sipush 0");
+
     }
 }
