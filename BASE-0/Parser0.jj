@@ -209,6 +209,7 @@ ASTNode Exp() :
 {
      t1=EA() (<EQUALS> t2 = EA() {t1 = new ASTEq(t1, t2);}| <ASSIGN> t2 = EA() {t1 = new ASTAssign(t1, t2);})?
 
+
      {return t1;}
 }
 
@@ -261,7 +262,7 @@ ASTNode Comp() :
    |<BEQ> t2 = Exp() { t1 = new ASTBiggerOrEqual(t1,t2); }
    |<AND>  t2 = Exp() { t1 = new ASTAnd(t1,t2); }
    |<OR> t2 = Exp() { t1 = new ASTOr(t1,t2); }
-  )?
+  )*
   {
     return t1;
   }
@@ -299,7 +300,7 @@ ASTNode Fact() :{
         |<NOT> t1=Fact() { t = new ASTNot(t1);}
 
         |
-        <IF> t = Comp() <THEN> t1 = Seq() (<ELSE> t2=Seq() {elset = t2;} )? <End>
+        <IF>  t = Comp() <THEN> t1 = Seq() (<ELSE> t2=Seq() {elset = t2;} )? <End>
         {         t = new ASTIf(t,t1,elset);
 
         }

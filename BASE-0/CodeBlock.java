@@ -23,6 +23,11 @@ public class CodeBlock {
         code.append(String.format("\t%s\n", bytecode));
     }
 
+    void emitNoEnter(String bytecode) {
+        code.append(String.format("\t%s", bytecode));
+    }
+
+
     void remove(String bytecode){
         int ibc2remove = code.lastIndexOf(bytecode);
         code.delete(ibc2remove,-1);

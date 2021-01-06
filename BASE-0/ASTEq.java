@@ -2,7 +2,7 @@ import Exceptions.TypeError;
 
 public class ASTEq implements ASTNode {
 
-    public static final String BYTECODE = "imul";
+    public static final String BYTECODE = "if_icmpeq";
     ASTNode lhs, rhs;
 
     public ASTEq(ASTNode l, ASTNode r) {
@@ -23,10 +23,26 @@ public class ASTEq implements ASTNode {
         }
         throw new TypeError("TypeError: Illegal arguments with relational operators...");
     }
-    @Override
     public void compile(CodeBlock c, Environment e) {
+
         lhs.compile(c, e);
+
         rhs.compile(c, e);
-        c.emit(BYTECODE);
+
+        c.emitNoEnter(BYTECODE);
+
+        int x = c.genLabels(1);
+
+        c.emit("TRUE" + x);
+        c.emit("sipush 0");
+        c.emit("goto exit" + x);
+
+        c.emit("TRUE" +(x) + ":");
+        c.emit("sipush 1");
+
+        c.emit("exit" + x+ ":");
+
+
+
     }
 }

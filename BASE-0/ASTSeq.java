@@ -16,5 +16,9 @@ public class ASTSeq implements ASTNode {
     @Override
     public void compile(CodeBlock c, Environment e) {
 
+        exp1.compile(c,e);
+        c.emit("pop");
+        exp2.compile(c,e);
+
     }
 }

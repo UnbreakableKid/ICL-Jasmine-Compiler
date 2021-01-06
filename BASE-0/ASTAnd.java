@@ -1,7 +1,8 @@
 import Exceptions.TypeError;
 
 public class ASTAnd implements ASTNode {
-	
+	private static final String BYTECODE = "iand";
+
 	ASTNode e1, e2;
 
 	public ASTAnd(ASTNode e1, ASTNode e2) {
@@ -21,7 +22,9 @@ public class ASTAnd implements ASTNode {
 
 	@Override
 	public void compile(CodeBlock c, Environment e) {
-
+		e1.compile(c, e);
+		e2.compile(c, e);
+		c.emit(BYTECODE);
 	}
 
 }

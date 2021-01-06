@@ -2,6 +2,8 @@ import Exceptions.TypeError;
 
 public class ASTLessOrEqual implements ASTNode {
 
+	private static final String BYTECODE = "if_icmple";
+
 	ASTNode e1, e2;
 
 	public ASTLessOrEqual(ASTNode e1, ASTNode e2) {
@@ -18,8 +20,25 @@ public class ASTLessOrEqual implements ASTNode {
 		throw new TypeError("TypeError: Illegal arguments with relational operators...");
 	}
 
-	@Override
 	public void compile(CodeBlock c, Environment e) {
+
+		e1.compile(c, e);
+
+		e2.compile(c, e);
+
+		c.emitNoEnter(BYTECODE);
+
+		int x = c.genLabels(1);
+
+		c.emit("TRUE" + x);
+		c.emit("sipush 0");
+		c.emit("goto exit" + x);
+
+		c.emit("TRUE" +(x) + ":");
+		c.emit("sipush 1");
+
+		c.emit("exit" + x+ ":");
+
 
 	}
 
