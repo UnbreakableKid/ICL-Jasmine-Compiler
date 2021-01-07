@@ -39,4 +39,15 @@ public class ASTWhile implements ASTNode {
         c.emit(end + ":");
     }
 
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        IType condType = lhs.typeCheck(env);
+
+        if(condType instanceof TBool){
+            rhs.typeCheck(env);
+            return new TBool();
+        }
+        throw new TypeError("while: condition is non boolean");
+    }
+
 }

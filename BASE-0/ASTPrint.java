@@ -1,3 +1,5 @@
+import Exceptions.TypeError;
+
 public class ASTPrint implements ASTNode {
 
     private static final String BYTECODE_1 ="getstatic java/lang/System/out Ljava/io/PrintStream;";
@@ -21,6 +23,18 @@ public class ASTPrint implements ASTNode {
         content.compile(c, e);
         c.emit(BYTECODE_2);
         c.emit(BYTECODE_3);
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        IType v = content.typeCheck(env);
+
+        if(v instanceof TInt)
+            return new TInt();
+        if(v instanceof TBool)
+            return new TBool();
+
+        throw new TypeError("Illegal type to [print]");
     }
 
 }

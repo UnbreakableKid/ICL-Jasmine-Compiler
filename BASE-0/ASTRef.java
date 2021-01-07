@@ -16,4 +16,9 @@ public class ASTRef implements ASTNode {
     public void compile(CodeBlock c, Environment e) {
 
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        return new TRef(ref.typeCheck(env));
+    }
 }

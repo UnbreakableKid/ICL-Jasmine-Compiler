@@ -42,7 +42,18 @@ public class ASTEq implements ASTNode {
 
         c.emit("exit" + x+ ":");
 
+    }
 
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        IType left = lhs.typeCheck(env);
+        IType right = rhs.typeCheck(env);
 
+        if(left instanceof TInt && right instanceof TInt)
+            return new TInt();
+        if(left instanceof TBool && right instanceof TBool)
+            return new TBool();
+
+        throw new TypeError("==: argument type is not matching");
     }
 }

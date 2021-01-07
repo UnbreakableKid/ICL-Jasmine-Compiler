@@ -1,8 +1,9 @@
 public interface ASTNode {
 
     //int eval(Environment e);
-    IValue eval(Environment<IValue> e);
+    IValue eval(Environment<IValue> env);
 
-    void compile(CodeBlock c, Environment e);
+    void compile(CodeBlock c, Environment env);
 
+    IType typeCheck(Environment<IType> env);
 }

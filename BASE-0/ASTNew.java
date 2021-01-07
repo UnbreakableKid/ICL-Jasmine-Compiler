@@ -12,6 +12,11 @@ public class ASTNew implements ASTNode {
 
     }
 
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        return new TRef(lhs.typeCheck(env));
+    }
+
 //    public int eval(Environment e) {
 //        return lhs.eval(e) + rhs.eval(e);
 //    }

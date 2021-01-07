@@ -27,4 +27,15 @@ public class ASTAnd implements ASTNode {
 		c.emit(BYTECODE);
 	}
 
+	@Override
+	public IType typeCheck(Environment<IType> env) {
+		IType left = e1.typeCheck(env);
+		IType right = e2.typeCheck(env);
+
+		if(left instanceof TBool && right instanceof TBool)
+			return new TBool();
+
+		throw new TypeError("&&: argument is non boolean");
+	}
+
 }

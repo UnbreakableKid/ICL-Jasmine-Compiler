@@ -22,4 +22,9 @@ public class ASTAssign implements ASTNode {
     public void compile(CodeBlock c, Environment e) {
 
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        return new TRef(e2.typeCheck(env));
+    }
 }

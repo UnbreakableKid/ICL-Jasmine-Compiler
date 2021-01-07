@@ -42,4 +42,15 @@ public class ASTLessOrEqual implements ASTNode {
 
 	}
 
+	@Override
+	public IType typeCheck(Environment<IType> env) {
+		IType left = e1.typeCheck(env);
+		IType right = e2.typeCheck(env);
+
+		if(left instanceof TInt && right instanceof TInt)
+			return new TInt();
+
+		throw new TypeError("<=: argument is not an integer");
+	}
+
 }

@@ -104,6 +104,12 @@ SKIP :
 
 TOKEN :
 {
+  < INT: ("int")|("Int")>
+  |
+  < BOOL: ("bool")|("Bool")>
+  |
+  < REF: ("ref")|("Ref")>
+  |
   <Def : "def">
   |
   < In: "in" >
@@ -128,7 +134,7 @@ TOKEN :
   |
   <PRINTLN: "println">
   |
-   <BOOL : "true" | "false">
+   <BOOLEAN : "true" | "false">
   |
   <DEREF : "!">
   |
@@ -295,7 +301,7 @@ ASTNode Fact() :{
           t = new ASTId(n.image);
         }
 
-        |n=<BOOL> {t = new ASTBool(Boolean.parseBoolean(n.image));}
+        |n=<BOOLEAN> {t = new ASTBool(Boolean.parseBoolean(n.image));}
 
         |<NOT> t1=Fact() { t = new ASTNot(t1);}
 
@@ -334,3 +340,17 @@ ASTNode Fact() :{
 
         { return t; }
     }
+ASTNode TYP():
+{
+  Token n;
+  ASTNode t, t1;
+}
+{
+  (
+    n=<INT> {t = new ASTNum();}
+    | n=<BOOL> {t = new ASTBool();}
+    | n=<REF> t1=TYP() {t = new ASTRef(t1);}
+  )
+  { return t; }
+}
+

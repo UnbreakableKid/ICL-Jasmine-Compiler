@@ -2,7 +2,6 @@ import Exceptions.TypeError;
 
 public class ASTDeref implements ASTNode {
 
-
     ASTNode v;
 
     public ASTDeref(ASTNode v) {
@@ -21,5 +20,13 @@ public class ASTDeref implements ASTNode {
     @Override
     public void compile(CodeBlock c, Environment e) {
 
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        IType ref = v.typeCheck(env);
+        if(ref instanceof TRef)
+            return ((TRef)ref).getRefType();
+        throw new TypeError("!: argument type is not reference");
     }
 }

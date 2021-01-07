@@ -44,4 +44,9 @@ public class ASTId implements ASTNode {
 
         c.emit("getfield frame_" + (idDepth - 1) + "/" + x.getPosition() + " I");
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        return env.find(id);
+    }
 }
