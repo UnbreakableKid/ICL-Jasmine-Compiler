@@ -1,1 +1,1 @@
-if true && true then true else false end;;
+def x = 4 in while x > 3 do x=x-1 end ; print x end;;

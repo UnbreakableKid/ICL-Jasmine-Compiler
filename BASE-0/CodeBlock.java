@@ -59,8 +59,8 @@ public class CodeBlock {
 
     private StringBuffer generateEnd() {
         StringBuffer ending = new StringBuffer();
-        ending.append("\n\tinvokestatic java/lang/String/valueOf(I)Ljava/lang/String;\n");
-        ending.append("\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n");
+        //ending.append("\n\tinvokestatic java/lang/String/valueOf(I)Ljava/lang/String;\n");
+        //ending.append("\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V\n");
         ending.append("\treturn\n");
         ending.append(".end method\n");
         return ending;

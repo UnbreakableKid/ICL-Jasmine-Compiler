@@ -11,17 +11,44 @@
 	.limit stack 256
 
 getstatic java/lang/System/out Ljava/io/PrintStream;
-	sipush 1
-	sipush 1
-	iand
-	ifgt L01
+	new frame_0
+	dup
+	invokespecial frame_0/<init>()V
+	dup
+	aload_0
+	putfield frame_0/sl Ljava/lang/Object;
+	dup
+	astore_3
+	dup
+	sipush 4
+	putfield frame_0/v0 I
+	pop
+L0:
+	aload_3
+	getfield frame_0/v0 I
+	sipush 3
+	if_icmpgt	TRUE2
 	sipush 0
-	goto L02
-	L01:
+	goto exit2
+TRUE2:
 	sipush 1
-	L02:
-
+exit2:
+	ifeq L01
+	aload_3
+	getfield frame_0/v0 I
+	sipush 1
+	isub
+	pop
+	goto L0
+L01:
+	pop
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	aload_3
+	getfield frame_0/v0 I
 	invokestatic java/lang/String/valueOf(I)Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	aload_3
+	getfield frame_0/sl Ljava/lang/Object;
+	astore_3
 	return
 .end method

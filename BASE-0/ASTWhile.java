@@ -34,6 +34,7 @@ public class ASTWhile implements ASTNode {
         c.emit(start + ":");
         lhs.compile(c,e);
         c.emit("ifeq " + end);
+        rhs.compile(c,e);
         c.emit("pop");
         c.emit("goto " + start);
         c.emit(end + ":");
