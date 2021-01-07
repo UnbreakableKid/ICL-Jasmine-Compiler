@@ -453,7 +453,8 @@ t = new ASTPrint(t1);
           jj_consume_token(COLON);
           switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
           case INT:
-          case BOOL:{
+          case BOOL:
+          case REF:{
             ty = TYP();
 types.put(n.image, ty);
             break;
@@ -513,6 +514,12 @@ t = new TInt();
     case BOOL:{
       n = jj_consume_token(BOOL);
 t = new TBool();
+      break;
+      }
+    case REF:{
+      n = jj_consume_token(REF);
+      t1 = TYP();
+t = new TRef(t1);
       break;
       }
     default:
@@ -780,7 +787,7 @@ t = new TBool();
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x1,0xa17e9c80,0x0,0x0,0x0,0x0,0x1800000,0x52000000,0xc000000,0xc000000,0x2000,0x30,0x0,0x200000,0xa17e9880,0x30,};
+	   jj_la1_0 = new int[] {0x1,0xa17e9c80,0x0,0x0,0x0,0x0,0x1800000,0x52000000,0xc000000,0xc000000,0x2000,0x70,0x0,0x200000,0xa17e9880,0x70,};
 	}
 	private static void jj_la1_init_1() {
 	   jj_la1_1 = new int[] {0x2,0x0,0x20,0x800,0x18,0x18,0x0,0x0,0x3c4,0x3c4,0x0,0x0,0x400,0x0,0x0,0x0,};

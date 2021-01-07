@@ -358,6 +358,7 @@ IType TYP():
 
     t = new TBool();
 }
+| n = <REF> t1 = TYP() {t = new TRef(t1);}
   )
   { return t; }
 }
