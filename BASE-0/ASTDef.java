@@ -8,12 +8,12 @@ class ASTDef implements ASTNode {
 
     static final String DEFAULT_FOLDER = "Jasmine/";
     Map<String, ASTNode> vars;
-    Map<String, ASTNode> types;
+    Map<String, IType> types;
     ASTNode body;
 
-    public ASTDef(Map<String, ASTNode> vars, ASTNode r) {
+    public ASTDef(Map<String, ASTNode> vars, Map<String, IType> types, ASTNode r) {
         this.vars = vars;
-        this.types = null;
+        this.types = types;
         this.body = r;
     }
 
@@ -70,7 +70,7 @@ class ASTDef implements ASTNode {
 
         for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
             val = var.getValue().typeCheck(env);
-            IType type = types.get(var.getKey()).typeCheck(env);
+            IType type = types.get(var.getKey());
 
             if(val!=type)
                 throw new TypeError("Illegal type in [def]");

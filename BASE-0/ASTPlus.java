@@ -12,6 +12,7 @@ public class ASTPlus implements ASTNode {
 
     public IValue eval(Environment<IValue> env) {
         IValue v1 = lhs.eval(env);
+
         if (v1 instanceof VInt) {
             IValue v2 = rhs.eval(env);
             if (v2 instanceof VInt) {
@@ -22,6 +23,7 @@ public class ASTPlus implements ASTNode {
         throw new Error(" +:argument is not an integer");
 
     }
+
 
     public void compile(CodeBlock c, Environment e) {
         lhs.compile(c, e);

@@ -275,9 +275,12 @@ ASTNode Comp() :
 }
 
 ASTNode Fact() :{
-  Token n;
+  Token n, type;
+  IType ty;
   ASTNode t, t1, t2, elset = null;
   Map<String, ASTNode> vars = new HashMap<>();
+    Map<String, IType> types = new HashMap<>();
+
 }
     {
 
@@ -332,24 +335,29 @@ ASTNode Fact() :{
         | <PRINT> t1=EA() {t = new ASTPrint(t1);}
 
         |
-         <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Seq() <End> {
+         <Def> (n = <Id> (<COLON>   (ty = TYP() {types.put(n.image, ty);})? <EQ> t1 = Exp()  {vars.put(n.image, t1);})? ) +  <In> t2 = Seq() <End> {
 
-          t = new ASTDef(vars, t2);
+          t = new ASTDef(vars, types , t2);
         }
         | <LPAR> t=Exp() <RPAR> )
 
         { return t; }
     }
-ASTNode TYP():
+IType TYP():
 {
   Token n;
-  ASTNode t, t1;
+  IType t, t1;
 }
 {
   (
-    n=<INT> {t = new ASTNum();}
-    | n=<BOOL> {t = new ASTBool();}
-    | n=<REF> t1=TYP() {t = new ASTRef(t1);}
+     n=<INT> {
+
+
+    t = new TInt();}
+    | n=<BOOL> {
+
+    t = new TBool();
+}
   )
   { return t; }
 }
