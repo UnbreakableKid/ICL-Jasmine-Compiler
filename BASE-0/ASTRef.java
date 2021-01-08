@@ -23,4 +23,9 @@ public class ASTRef implements ASTNode {
         c.emit("putfield ref_int/v I");
 
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        return new TRef(ref.typeCheck(env));
+    }
 }

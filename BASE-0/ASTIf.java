@@ -40,4 +40,22 @@ public class ASTIf implements ASTNode {
         c.emit(endB + ":");
 
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        IType t1 = condition.typeCheck(env);
+
+        if (t1 instanceof TBool){
+            IType tt = body.typeCheck(env);
+            if(elsebody==null)
+                return tt;
+
+            IType te = elsebody.typeCheck(env);
+            if(tt.equals(te))
+                return te;
+
+            throw new TypeError("if: mismatch in then else	branch types");
+        }
+        throw new TypeError("if: condition	is non boolean");
+    }
 }

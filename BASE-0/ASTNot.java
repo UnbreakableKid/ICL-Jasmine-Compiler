@@ -22,4 +22,12 @@ public class ASTNot implements ASTNode{
     public void compile(CodeBlock c, Environment e) {
         throw new NotImplementedException();
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        IType bool = v.typeCheck(env);
+        if(bool instanceof TBool)
+            return new TBool();
+        throw new TypeError("~: argument is non boolean");
+    }
 }

@@ -15,15 +15,24 @@ public class ASTAssign implements ASTNode {
             ((VRef) v1).set(v2);
             return v2;
         }
-        throw new Error("assignment	:=	:lhs is not a reference");
+        throw new Error("assignment	[:=] argument is not a reference");
     }
 
     @Override
     public void compile(CodeBlock c, Environment e) {
 
+
+        e2.compile(c,e);
+        c.emit("dup");
         e1.compile(c,e);
         c.emit("checkcast ref_int");
-        e2.compile(c,e);
+
+        c.emit("swap");
         c.emit("putfield ref_int/v I");
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        return new TRef(e2.typeCheck(env));
     }
 }

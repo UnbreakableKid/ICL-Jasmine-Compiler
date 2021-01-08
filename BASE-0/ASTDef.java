@@ -1,3 +1,4 @@
+import Exceptions.TypeError;
 import util.Coordinates;
 
 import java.io.*;
@@ -7,10 +8,12 @@ class ASTDef implements ASTNode {
 
     static final String DEFAULT_FOLDER = "Jasmine/";
     Map<String, ASTNode> vars;
+    Map<String, IType> types;
     ASTNode body;
 
-    public ASTDef(Map<String, ASTNode> vars, ASTNode r) {
+    public ASTDef(Map<String, ASTNode> vars, Map<String, IType> types, ASTNode r) {
         this.vars = vars;
+        this.types = types;
         this.body = r;
     }
 
@@ -24,7 +27,7 @@ class ASTDef implements ASTNode {
             new_e.assoc(var.getKey(), val);
         }
         val = body.eval(new_e);
-        env = new_e.endScope();
+        new_e.endScope();
         return val;
     }
 
@@ -57,5 +60,31 @@ class ASTDef implements ASTNode {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+    }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+
+        IType val;
+        Environment<IType> new_e = env.beginScope();
+
+        for (Map.Entry<String, ASTNode> var : vars.entrySet()) {
+            val = var.getValue().typeCheck(env);
+            IType type = types.get(var.getKey());
+
+            IType aux = type;
+
+            while (aux instanceof TRef){
+                aux = ((TRef) val).getRefType();
+            }
+            if(aux.getType().compareTo(type.getType()) != 0 )
+                throw new TypeError(String.format("Illegal type in [def]: [%s] not match [%s]",aux.getType(),type.getType()));
+
+            new_e.assoc(var.getKey(), val);
+        }
+        val = body.typeCheck(new_e);
+        new_e.endScope();
+
+        return val;
     }
 }

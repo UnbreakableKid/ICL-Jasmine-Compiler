@@ -51,7 +51,7 @@ public class Parser {
   }
 
   private static void compiler(Parser parser, String filename) throws IOException {
-        Environment<Integer> env = new Environment<>();
+        Environment<IType> env = new Environment<>();
         ASTNode exp;
         CodeBlock codeBlock = new CodeBlock();
         BufferedWriter out;
@@ -59,7 +59,7 @@ public class Parser {
         out = new BufferedWriter(new FileWriter(CodeBlock.DEFAULT_FOLDER + "ref_int.j"));
         out.write(".class ref_int\n");
         out.write(".super java/lang/Object\n");
-        out.write(".field public v I;\n");
+        out.write(".field public v I\n");
         out.write(".method public <init>()V\n");
                 out.write("\taload_0\n");
                 out.write("\tinvokenonvirtual java/lang/Object/<init>()V\n");
@@ -69,6 +69,11 @@ public class Parser {
         out.close();
         try{
             exp = parser.Start();
+            try {IType x = exp.typeCheck(env);
+
+                                }catch (Exception e){
+                                    System.out.println(e.getMessage());
+                                }
             exp.compile(codeBlock, env);
             codeBlock.dump(filename);
             //codeBlock.code.clear();
@@ -92,7 +97,7 @@ public class Parser {
                    try {
                     IValue x = exp.eval(env);
                     if(x != null)
-                        System.out.println(x.stringify());
+                        System.out.println("RESULT: " + x.stringify());
                     }catch (Exception e){
                         System.out.println(e.getMessage());
                     }
@@ -116,6 +121,12 @@ SKIP :
 
 TOKEN :
 {
+  < INT: ("int")|("Int")>
+  |
+  < BOOL: ("bool")|("Bool")>
+  |
+  < REF: ("ref")|("Ref")>
+  |
   <Def : "def">
   |
   < In: "in" >
@@ -140,7 +151,7 @@ TOKEN :
   |
   <PRINTLN: "println">
   |
-   <BOOL : "true" | "false">
+   <BOOLEAN : "true" | "false">
   |
   <DEREF : "!">
   |
@@ -281,9 +292,12 @@ ASTNode Comp() :
 }
 
 ASTNode Fact() :{
-  Token n;
+  Token n, type;
+  IType ty;
   ASTNode t, t1, t2, elset = null;
   Map<String, ASTNode> vars = new HashMap<>();
+    Map<String, IType> types = new HashMap<>();
+
 }
     {
 
@@ -307,7 +321,7 @@ ASTNode Fact() :{
           t = new ASTId(n.image);
         }
 
-        |n=<BOOL> {t = new ASTBool(Boolean.parseBoolean(n.image));}
+        |n=<BOOLEAN> {t = new ASTBool(Boolean.parseBoolean(n.image));}
 
         |<NOT> t1=Fact() { t = new ASTNot(t1);}
 
@@ -332,17 +346,37 @@ ASTNode Fact() :{
 
         | <PRINTLN> (LOOKAHEAD(2) t1=EA() {elset = t1;})?
 
-        {t = new ASTPrintln(elset);}
+        { t = new ASTPrintln(elset);}
 
 
         | <PRINT> t1=EA() {t = new ASTPrint(t1);}
 
         |
-         <Def> (n = <Id> <EQ> t1 = Exp()  {vars.put(n.image, t1);}) +  <In> t2 = Seq() <End> {
+         <Def> (n = <Id> (<COLON>   ty = TYP() {types.put(n.image, ty);})? <EQ> t1 = Exp()  {vars.put(n.image, t1);} ) +  <In> t2 = Seq() <End> {
 
-          t = new ASTDef(vars, t2);
+          t = new ASTDef(vars, types , t2);
         }
         | <LPAR> t=Exp() <RPAR> )
 
         { return t; }
     }
+IType TYP():
+{
+  Token n;
+  IType t, t1;
+}
+{
+  (
+     n=<INT> {
+
+
+    t = new TInt();}
+    | n=<BOOL> {
+
+    t = new TBool();
+}
+| n = <REF> t1 = TYP() {t = new TRef(t1);}
+  )
+  { return t; }
+}
+

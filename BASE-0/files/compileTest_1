@@ -1,0 +1,11 @@
+def	m: ref int = new 10
+    one: int = 1
+in while !m>one	do
+    println !m;
+    if !m%2	== 0 then
+	    m := !m/2
+    else
+	m := 3*!m +	1
+    end
+   end
+end;;

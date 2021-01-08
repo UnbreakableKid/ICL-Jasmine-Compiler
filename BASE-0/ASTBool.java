@@ -21,4 +21,9 @@ public class ASTBool implements ASTNode{
             c.emit("sipush 0");
 
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        return new TBool();
+    }
 }

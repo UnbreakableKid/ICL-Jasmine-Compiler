@@ -1,1 +1,1 @@
-def x = 4 in while x > 3 do x=x-1 end ; print x end;;
+def x:int = new 3 z:bool = new 3 in !x+!z end;;

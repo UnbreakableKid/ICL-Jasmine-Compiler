@@ -16,4 +16,9 @@ public class ASTNum implements ASTNode {
     public void compile(CodeBlock c, Environment e) {
         c.emit(BYTECODE + val);
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        return new TInt();
+    }
 }

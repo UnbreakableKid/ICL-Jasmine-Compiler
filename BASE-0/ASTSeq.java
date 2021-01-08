@@ -21,4 +21,10 @@ public class ASTSeq implements ASTNode {
         exp2.compile(c,e);
 
     }
+
+    @Override
+    public IType typeCheck(Environment<IType> env) {
+        exp1.typeCheck(env);
+        return exp2.typeCheck(env);
+    }
 }
