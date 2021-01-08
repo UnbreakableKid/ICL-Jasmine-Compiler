@@ -1,1 +1,1 @@
-def x = 4 in while x > 3 do x=x-1 end ; print x end;;
+def	a =	new	5 in a := !a + 1; print !a end;;

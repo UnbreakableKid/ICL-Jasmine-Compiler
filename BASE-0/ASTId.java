@@ -42,7 +42,7 @@ public class ASTId implements ASTNode {
             d--;
         }
 
-        c.emit("getfield frame_" + (idDepth - 1) + "/" + x.getPosition() + " I");
+        c.emit("getfield frame_" + (idDepth - 1) + "/" + x.getPosition() + " Ljava/lang/Object;");
     }
 
     @Override

@@ -42,8 +42,8 @@ public class FrameCode {
 
     void genMiddleFrame(CodeBlock code, String vpos) throws IOException {
 
-        code.emit(String.format("putfield %s%d/%s I",FRAME,nframe,vpos));
-        out.write("\t.field public "+ vpos +" I\n");
+        code.emit(String.format("putfield %s%d/%s Ljava/lang/Object;",FRAME,nframe,vpos));
+        out.write("\t.field public "+ vpos +" Ljava/lang/Object;\n");
     }
 
     void genEndFrame_1(CodeBlock code) throws IOException {

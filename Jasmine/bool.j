@@ -7,10 +7,12 @@
 	return
 .end method
 .method public static main([Ljava/lang/String;)V
-	.limit locals 4
+	.limit locals 10
 	.limit stack 256
 
-getstatic java/lang/System/out Ljava/io/PrintStream;
+	aconst_null
+	astore_3
+
 	new frame_0
 	dup
 	invokespecial frame_0/<init>()V
@@ -20,31 +22,34 @@ getstatic java/lang/System/out Ljava/io/PrintStream;
 	dup
 	astore_3
 	dup
-	sipush 4
-	putfield frame_0/v0 I
+	new ref_int
+	dup
+	invokespecial ref_int/<init>()V
+	dup
+	sipush 5
+	putfield ref_int/v I
+	putfield frame_0/v0 Ljava/lang/Object;
 	pop
-L0:
 	aload_3
-	getfield frame_0/v0 I
-	sipush 3
-	if_icmpgt	TRUE2
-	sipush 0
-	goto exit2
-TRUE2:
+	getfield frame_0/v0 Ljava/lang/Object;
+	checkcast ref_int
+	getfield ref_int/v I 
+
 	sipush 1
-exit2:
-	ifeq L01
+	iadd
+	dup
 	aload_3
-	getfield frame_0/v0 I
-	sipush 1
-	isub
-	pop
-	goto L0
-L01:
+	getfield frame_0/v0 Ljava/lang/Object;
+	checkcast ref_int
+	swap
+	putfield ref_int/v I
 	pop
 	getstatic java/lang/System/out Ljava/io/PrintStream;
 	aload_3
-	getfield frame_0/v0 I
+	getfield frame_0/v0 Ljava/lang/Object;
+	checkcast ref_int
+	getfield ref_int/v I 
+
 	invokestatic java/lang/String/valueOf(I)Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 	aload_3

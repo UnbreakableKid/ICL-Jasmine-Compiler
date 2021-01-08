@@ -59,7 +59,7 @@ public class Parser {
         out = new BufferedWriter(new FileWriter(CodeBlock.DEFAULT_FOLDER + "ref_int.j"));
         out.write(".class ref_int\n");
         out.write(".super java/lang/Object\n");
-        out.write(".field public v I;\n");
+        out.write(".field public v I\n");
         out.write(".method public <init>()V\n");
                 out.write("\taload_0\n");
                 out.write("\tinvokenonvirtual java/lang/Object/<init>()V\n");
@@ -347,7 +347,7 @@ ASTNode Fact() :{
         | <PRINT> t1=EA() {t = new ASTPrint(t1);}
 
         |
-         <Def> (n = <Id> (<COLON>   (ty = TYP() {types.put(n.image, ty);})? <EQ> t1 = Exp()  {vars.put(n.image, t1);})? ) +  <In> t2 = Seq() <End> {
+         <Def> (n = <Id> (<COLON>   ty = TYP() {types.put(n.image, ty);})? <EQ> t1 = Exp()  {vars.put(n.image, t1);} ) +  <In> t2 = Seq() <End> {
 
           t = new ASTDef(vars, types , t2);
         }

@@ -21,9 +21,13 @@ public class ASTAssign implements ASTNode {
     @Override
     public void compile(CodeBlock c, Environment e) {
 
+
+        e2.compile(c,e);
+        c.emit("dup");
         e1.compile(c,e);
         c.emit("checkcast ref_int");
-        e2.compile(c,e);
+
+        c.emit("swap");
         c.emit("putfield ref_int/v I");
     }
 

@@ -59,7 +59,7 @@ public class Parser implements ParserConstants {
         out = new BufferedWriter(new FileWriter(CodeBlock.DEFAULT_FOLDER + "ref_int.j"));
         out.write(".class ref_int\n");
         out.write(".super java/lang/Object\n");
-        out.write(".field public v I;\n");
+        out.write(".field public v I\n");
         out.write(".method public <init>()V\n");
                 out.write("\taload_0\n");
                 out.write("\tinvokenonvirtual java/lang/Object/<init>()V\n");
@@ -463,34 +463,24 @@ t = new ASTPrint(t1);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case COLON:{
           jj_consume_token(COLON);
-          switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-          case INT:
-          case BOOL:
-          case REF:{
-            ty = TYP();
+          ty = TYP();
 types.put(n.image, ty);
-            break;
-            }
-          default:
-            jj_la1[11] = jj_gen;
-            ;
-          }
-          jj_consume_token(EQ);
-          t1 = Exp();
-vars.put(n.image, t1);
           break;
           }
         default:
-          jj_la1[12] = jj_gen;
+          jj_la1[11] = jj_gen;
           ;
         }
+        jj_consume_token(EQ);
+        t1 = Exp();
+vars.put(n.image, t1);
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case Id:{
           ;
           break;
           }
         default:
-          jj_la1[13] = jj_gen;
+          jj_la1[12] = jj_gen;
           break label_6;
         }
       }
@@ -507,7 +497,7 @@ t = new ASTDef(vars, types , t2);
       break;
       }
     default:
-      jj_la1[14] = jj_gen;
+      jj_la1[13] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -535,7 +525,7 @@ t = new TRef(t1);
       break;
       }
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[14] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -791,7 +781,7 @@ t = new TRef(t1);
   static private Token jj_scanpos, jj_lastpos;
   static private int jj_la;
   static private int jj_gen;
-  static final private int[] jj_la1 = new int[16];
+  static final private int[] jj_la1 = new int[15];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -799,10 +789,10 @@ t = new TRef(t1);
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x1,0xa17e9c80,0x0,0x0,0x0,0x0,0x1800000,0x52000000,0xc000000,0xc000000,0x2000,0x70,0x0,0x200000,0xa17e9880,0x70,};
+	   jj_la1_0 = new int[] {0x1,0xa17e9c80,0x0,0x0,0x0,0x0,0x1800000,0x52000000,0xc000000,0xc000000,0x2000,0x0,0x200000,0xa17e9880,0x70,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x2,0x0,0x20,0x800,0x18,0x18,0x0,0x0,0x3c4,0x3c4,0x0,0x0,0x400,0x0,0x0,0x0,};
+	   jj_la1_1 = new int[] {0x2,0x0,0x20,0x800,0x18,0x18,0x0,0x0,0x3c4,0x3c4,0x0,0x400,0x0,0x0,0x0,};
 	}
   static final private JJCalls[] jj_2_rtns = new JJCalls[3];
   static private boolean jj_rescan = false;
@@ -826,7 +816,7 @@ t = new TRef(t1);
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 15; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -841,7 +831,7 @@ t = new TRef(t1);
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 15; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -859,7 +849,7 @@ t = new TRef(t1);
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 15; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -878,7 +868,7 @@ t = new TRef(t1);
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 15; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -895,7 +885,7 @@ t = new TRef(t1);
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 15; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -905,7 +895,7 @@ t = new TRef(t1);
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 16; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 15; i++) jj_la1[i] = -1;
 	 for (int i = 0; i < jj_2_rtns.length; i++) jj_2_rtns[i] = new JJCalls();
   }
 
@@ -1041,7 +1031,7 @@ t = new TRef(t1);
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
 	 }
-	 for (int i = 0; i < 16; i++) {
+	 for (int i = 0; i < 15; i++) {
 	   if (jj_la1[i] == jj_gen) {
 		 for (int j = 0; j < 32; j++) {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {
