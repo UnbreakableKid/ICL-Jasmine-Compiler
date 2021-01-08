@@ -1,1 +1,1 @@
-def	m: int = new 10 one: int = new 1 in while !m>!one do println !m; if !m%2	== 0 then m := !m/2 else m := 3*!m + 1 end end end;;
+def x:int = new 3 z:bool = new 3 in !x+!z end;;

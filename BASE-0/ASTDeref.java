@@ -29,8 +29,13 @@ public class ASTDeref implements ASTNode {
     @Override
     public IType typeCheck(Environment<IType> env) {
         IType ref = v.typeCheck(env);
-        if(ref instanceof TRef)
-            return ((TRef)ref).getRefType();
+        if(ref instanceof TRef) {
+
+            while (ref instanceof TRef) {
+                ref = ((TRef) ref).getRefType();
+            }
+            return ref;
+        }
         throw new TypeError("!: argument type is not reference");
     }
 }
