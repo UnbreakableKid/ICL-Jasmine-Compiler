@@ -1,19 +1,17 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class CodeBlock {
     StringBuffer code;
     private int LOCAL_LIMIT = 10;
     private int STACK_LIMIT = 256;
     private int numLabels = 0;
-    private Map<String, RefCode> refs;
+    //private Map<String, RefCode> refs;
 
     public CodeBlock() {
         code = new StringBuffer();
-        refs = new HashMap<>();
+        //refs = new HashMap<>();
     }
 
     static final String DEFAULT_FOLDER = "Jasmine/";
@@ -59,8 +57,8 @@ public class CodeBlock {
         out.write(end.toString());
         out.flush();
         out.close();
-        for (RefCode ref : refs.values())
-            ref.dump();
+        //for (RefCode ref : refs.values())
+          //  ref.dump();
     }
 
     private StringBuffer generateEnd() {
@@ -101,19 +99,19 @@ public class CodeBlock {
         emit("dup");
         emit(String.format("invokespecial ref_%s/<init>()V", type));
         emit("dup");
-        if (!refs.containsKey(type))
-            refs.put(type, new RefCode(type));
+        //if (!refs.containsKey(type))
+          //  refs.put(type, new RefCode(type));
     }
 
     public void generateRefCheckcast(String type) {
         emit(String.format("checkcast ref_%s", type));
     }
 
-    public void generateRefPut(String type) {
-        emit(String.format("putfield ref_%s/v I", type));
+    public void generateRefPut(String type, String vtype) {
+        emit(String.format("putfield ref_%s/v %s", type, vtype));
     }
 
-    public void generateRefGet(String type) {
-        emit(String.format("getfield ref_%s/v I", type));
+    public void generateRefGet(String type, String vtype) {
+        emit(String.format("getfield ref_%s/v %s", type, vtype));
     }
 }

@@ -67,13 +67,14 @@ public class Parser {
         out.write(".end method \n");
         out.flush();
         out.close();
+        
         try{
             exp = parser.Start();
-            try {IType x = exp.typeCheck(env);
-
-                                }catch (Exception e){
-                                    System.out.println(e.getMessage());
-                                }
+            try {
+                IType x = exp.typeCheck(env);
+            }catch (Exception e){
+                System.out.println(e.getMessage());
+            }
             exp.compile(codeBlock, env);
             codeBlock.dump(filename);
             //codeBlock.code.clear();
