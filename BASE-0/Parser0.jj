@@ -67,7 +67,7 @@ public class Parser {
         out.write(".end method \n");
         out.flush();
         out.close();
-        
+
         try{
             exp = parser.Start();
             try {
