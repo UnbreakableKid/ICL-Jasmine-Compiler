@@ -21,3 +21,4 @@ def	m =	new 10 in while !m>1 do m:=!m -1 end end;;
 ###
 def m = new 10 in if !m == 10 then 3 else 4 end end;;
 ######
+def m:ref int = new 10 one:int = 1 in while !m>one do println !m; if !m%2 == 0 then m:= !m/2 else m:= 3*!m+1 end end end;;
