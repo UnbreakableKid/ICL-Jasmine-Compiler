@@ -51,7 +51,7 @@ public class ASTIf implements ASTNode {
                 return tt;
 
             IType te = elsebody.typeCheck(env);
-            if(tt.equals(te))
+            if(tt.getType().compareTo(te.getType()) == 0)
                 return te;
 
             throw new TypeError("if: mismatch in then else	branch types");

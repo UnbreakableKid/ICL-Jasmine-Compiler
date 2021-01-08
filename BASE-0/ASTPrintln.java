@@ -23,11 +23,14 @@ public class ASTPrintln implements ASTNode {
     }
 
     public void compile(CodeBlock c, Environment e) {
-        content.compile(c, e);
-        c.emit("dup");
-        c.emit(BYTECODE_1);
-        c.emit("swap");
-        c.emit(BYTECODE_2);
+
+        if (content != null) {
+            content.compile(c, e);
+            c.emit("dup");
+            c.emit(BYTECODE_1);
+            c.emit("swap");
+            c.emit(BYTECODE_2);
+        }
         //c.emit(BYTECODE_3);
     }
 

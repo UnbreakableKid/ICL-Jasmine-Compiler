@@ -1,1 +1,1 @@
-def x:int = new 3 z:bool = new 3 in !x+!z end;;
+def	a:bool = new true in !a+!a end;;

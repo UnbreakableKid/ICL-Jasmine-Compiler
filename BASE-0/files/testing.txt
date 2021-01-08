@@ -9,8 +9,9 @@ def	a =	new	5 in a := !a + 1 end;;
 ###
 def	a =	5 in !a end;; //TypeError!! a is not a reference!
 ###
+def	a:bool = new true in !a+!a end;; can't add bools
 ###
-def	m =	new 10 in while !m>1 do println !m; if !m%2 == 0 then m := !m/2 else m := 3*!m+1; println end end end;;
+def	m =	new 10 in while !m>1 do println !m; if !m%2 == 0 then m := !m/2 else m := 3*!m+1 end end end;;
 ###
 ###
 def	x =	new	10 s = new 0 in while !x > 0 do s := !s+!x; x := !x -1 end; print !s; println end;;
@@ -21,4 +22,5 @@ def	m =	new 10 in while !m>1 do m:=!m -1 end end;;
 ###
 def m = new 10 in if !m == 10 then 3 else 4 end end;;
 ######
-def m:ref int = new 10 one:int = 1 in while !m>one do println !m; if !m%2 == 0 then m:= !m/2 else m:= 3*!m+1 end end end;;
+
+def m:ref int = new 10 one:int = new 1 in while !m>!one do println !m; if !m%2 == 0 then m:= !m/2 else m:= 3*!m+1 end end end;;

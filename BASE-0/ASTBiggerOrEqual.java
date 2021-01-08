@@ -47,7 +47,7 @@ public class ASTBiggerOrEqual implements ASTNode {
 		IType right = e2.typeCheck(env);
 
 		if(left instanceof TInt && right instanceof TInt)
-			return new TInt();
+			return new TBool();
 
 		throw new TypeError(">=: argument is not an integer");
 	}

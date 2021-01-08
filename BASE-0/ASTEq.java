@@ -50,7 +50,7 @@ public class ASTEq implements ASTNode {
         IType right = rhs.typeCheck(env);
 
         if(left instanceof TInt && right instanceof TInt)
-            return new TInt();
+            return new TBool();
         if(left instanceof TBool && right instanceof TBool)
             return new TBool();
 
