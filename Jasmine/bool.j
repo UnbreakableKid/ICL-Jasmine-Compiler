@@ -26,7 +26,7 @@
 	dup
 	invokespecial ref_int/<init>()V
 	dup
-	sipush 1
+	sipush 5
 	putfield ref_int/v I
 	putfield frame_0/v0 Ljava/lang/Object;
 	pop
@@ -35,12 +35,14 @@
 	checkcast ref_int
 	getfield ref_int/v I 
 
+	sipush 1
+	iadd
+	dup
 	aload_3
 	getfield frame_0/v0 Ljava/lang/Object;
 	checkcast ref_int
-	getfield ref_int/v I 
-
-	iadd
+	swap
+	putfield ref_int/v I
 	aload_3
 	getfield frame_0/sl Ljava/lang/Object;
 	astore_3
