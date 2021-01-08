@@ -92,7 +92,7 @@ public class Parser implements ParserConstants {
                    try {
                     IValue x = exp.eval(env);
                     if(x != null)
-                        System.out.println(x.stringify());
+                        System.out.println("RESULT: " + x.stringify());
                     }catch (Exception e){
                         System.out.println(e.getMessage());
                     }

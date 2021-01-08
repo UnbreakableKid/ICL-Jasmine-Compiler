@@ -3,6 +3,7 @@
 
 .field public sl Ljava/lang/Object;
 	.field public v0 Ljava/lang/Object;
+	.field public v1 Ljava/lang/Object;
 .method public <init>()V
 	aload_0
 	invokenonvirtual java/lang/Object/<init>()V

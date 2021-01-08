@@ -1,1 +1,1 @@
-def	a =	new	5 in a := !a + 1; print !a end;;
+def	m: int = new 10 one: int = new 1 in while !m>!one do println !m; if !m%2	== 0 then m := !m/2 else m := 3*!m + 1 end end end;;
