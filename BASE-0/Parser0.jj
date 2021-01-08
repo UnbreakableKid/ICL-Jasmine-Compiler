@@ -51,7 +51,7 @@ public class Parser {
   }
 
   private static void compiler(Parser parser, String filename) throws IOException {
-        Environment<Integer> env = new Environment<>();
+        Environment<IType> env = new Environment<>();
         ASTNode exp;
         CodeBlock codeBlock = new CodeBlock();
         BufferedWriter out;

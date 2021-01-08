@@ -1,7 +1,7 @@
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-
+@Deprecated
 public class ASTNew implements ASTNode {
 
     ASTNode lhs;
@@ -12,11 +12,12 @@ public class ASTNew implements ASTNode {
     }
 
     public void compile(CodeBlock c, Environment e)  {
-
-
-
-
-
+        c.emit("new ref_int");
+        c.emit("dup");
+        c.emit("invokespecial ref_int/<init>()V");
+        c.emit("dup");
+        lhs.compile(c,e);
+        c.emit("putfield ref_int/v I");
     }
 
     @Override
