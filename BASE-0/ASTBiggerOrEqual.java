@@ -16,7 +16,7 @@ public class ASTBiggerOrEqual implements ASTNode {
 		IValue v2 = e2.eval(env);
 		if (v1 instanceof VInt && v2 instanceof VInt)
 			return new VBool(((VInt) v1).getVal() >= ((VInt) v2).getVal());
-		throw new TypeError("TypeError: Illegal arguments with relational operators...");
+		throw new TypeError("TypeError: Illegal arguments with relational operators[>=]");
 	}
 
 	public void compile(CodeBlock c, Environment e) {

@@ -20,9 +20,9 @@ public class ASTRest implements ASTNode {
                     throw new Error("Division by zero!");
                 return new VInt(((VInt) v1).getVal() % ((VInt) v2).getVal());
             }
-            throw new Error(" +:argument is not an integer");
+            throw new Error(" %:argument is not an integer");
         }
-        throw new Error(" +:argument is not an integer");
+        throw new Error(" %:argument is not an integer");
 
     }
     @Override

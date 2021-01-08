@@ -36,6 +36,6 @@ public class ASTDeref implements ASTNode {
             }
             return ref;
         }
-        throw new TypeError("!: argument type is not reference");
+        throw new TypeError(String.format("!: argument type[%s] is not reference",ref.getType()));
     }
 }

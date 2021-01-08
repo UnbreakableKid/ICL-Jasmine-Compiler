@@ -78,7 +78,7 @@ class ASTDef implements ASTNode {
                 aux = ((TRef) val).getRefType();
             }
             if(aux.getType().compareTo(type.getType()) != 0 )
-                throw new TypeError("Illegal type in [def]");
+                throw new TypeError(String.format("Illegal type in [def]: [%s] not match [%s]",aux.getType(),type.getType()));
 
             new_e.assoc(var.getKey(), val);
         }

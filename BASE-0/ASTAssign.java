@@ -15,7 +15,7 @@ public class ASTAssign implements ASTNode {
             ((VRef) v1).set(v2);
             return v2;
         }
-        throw new Error("assignment	:=	:lhs is not a reference");
+        throw new Error("assignment	[:=] argument is not a reference");
     }
 
     @Override

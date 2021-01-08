@@ -21,7 +21,7 @@ public class ASTEq implements ASTNode {
         if (v1 instanceof VBool && v2 instanceof VBool){
             return new VBool(((VBool) v1).getVal() == ((VBool) v2).getVal());
         }
-        throw new TypeError("TypeError: Illegal arguments with relational operators...");
+        throw new TypeError("TypeError: Illegal arguments with relational operators[==]");
     }
     public void compile(CodeBlock c, Environment e) {
 
@@ -54,6 +54,6 @@ public class ASTEq implements ASTNode {
         if(left instanceof TBool && right instanceof TBool)
             return new TBool();
 
-        throw new TypeError("==: argument type is not matching");
+        throw new TypeError(String.format("==: argument type [%s] not match [%s]",left.getType(),right.getType()));
     }
 }

@@ -18,7 +18,7 @@ public class ASTOr implements ASTNode {
 		if (v1 instanceof VBool && v2 instanceof VBool){
 			return new VBool(((VBool)v1).getVal()||((VBool)v2).getVal());
 		}
-		throw new TypeError("TypeError: Illegal arguments with relational operators...");
+		throw new TypeError("TypeError: Illegal arguments with relational operators[||]");
 	}
 
 	@Override

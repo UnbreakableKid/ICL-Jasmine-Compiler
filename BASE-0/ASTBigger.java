@@ -18,7 +18,7 @@ public class ASTBigger implements ASTNode {
 
 		if (v1 instanceof VInt && v2 instanceof VInt)
 			return new VBool(((VInt) v1).getVal() > ((VInt) v2).getVal());
-		throw new TypeError("TypeError: Illegal arguments with relational operators...");
+		throw new TypeError("TypeError: Illegal arguments with relational operators[>]");
 	}
 
 	@Override

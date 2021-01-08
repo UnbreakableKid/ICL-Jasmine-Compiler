@@ -14,7 +14,7 @@ public class ASTWhile implements ASTNode {
 
         IValue condVal = lhs.eval(env);
         if(!(condVal instanceof VBool))
-            throw new TypeError("TypeError: Illegal arguments with relational operators...");
+            throw new TypeError("TypeError: Illegal arguments with relational operators[while]");
 
         IValue finalexp = null;
         while (((VBool) condVal).getVal()) {

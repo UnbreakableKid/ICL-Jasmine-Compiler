@@ -18,9 +18,9 @@ public class ASTMul implements ASTNode {
             if (v2 instanceof VInt) {
                 return new VInt(((VInt) v1).getVal() * ((VInt) v2).getVal());
             }
-            throw new Error(" +:argument is not an integer");
+            throw new Error(" *:argument is not an integer");
         }
-        throw new Error(" +:argument is not an integer");
+        throw new Error(" *:argument is not an integer");
 
     }
     @Override
